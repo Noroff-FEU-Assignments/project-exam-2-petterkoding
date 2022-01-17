@@ -4,29 +4,83 @@ import styled from "styled-components";
 
 const Nav = () => {
   return (
-    <header>
+    <Header>
       <NavContainer className="nav-container">
-        <Link to="/" exact="true" className="logo">
+        <Logo to="/" exact="true" className="logo">
           Holidaze
-        </Link>
-        <nav>
-          <NavLink to="/" exact="true">
-            Home
-          </NavLink>
-          <NavLink to="/accommodations">Accommodations</NavLink>
-          <NavLink to="/contact-us">Contact us</NavLink>
-        </nav>
+        </Logo>
+        <Menu>
+          <MenuFlex>
+            <StyledLink to="/accommodations">Accommodations</StyledLink>
+            <StyledLink to="/contact-us">Contact us</StyledLink>
+          </MenuFlex>
+          <Link to="/login" className="login-btn">
+            Login
+          </Link>
+        </Menu>
       </NavContainer>
-    </header>
+    </Header>
   );
 };
 
+const Header = styled.header`
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+`;
+
 const NavContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 92rem;
+  margin: 0 auto;
+  padding: 0 10px;
   a {
     color: black;
+  }
+`;
+
+const Logo = styled(Link)`
+  flex: 1;
+  font-size: 2rem;
+  color: black;
+  text-decoration: none;
+`;
+
+const Menu = styled.nav`
+  display: flex;
+  flex: 2;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .login-btn {
+    border: none;
+    background: black;
+    color: white;
+    padding: 0.7rem 1.3rem;
+    border-radius: 20px;
+    text-decoration: none;
+    &:hover {
+      background: blue;
+    }
+  }
+`;
+
+const MenuFlex = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`;
+
+const StyledLink = styled(NavLink)`
+  font-size: 1rem;
+  color: black;
+  text-decoration: none;
+
+  &.active {
+    color: red;
   }
 `;
 
