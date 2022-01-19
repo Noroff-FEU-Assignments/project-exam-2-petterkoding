@@ -12,6 +12,7 @@ const Nav = () => {
         <Menu>
           <MenuFlex>
             <StyledLink to="/accommodations">Accommodations</StyledLink>
+            <StyledLink to="/host">Host</StyledLink>
             <StyledLink to="/contact-us">Contact us</StyledLink>
           </MenuFlex>
           <Link to="/login" className="login-btn">
@@ -25,7 +26,7 @@ const Nav = () => {
 
 const Header = styled.header`
   padding: 1rem 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const NavContainer = styled.div`
@@ -57,13 +58,14 @@ const Menu = styled.nav`
 
   .login-btn {
     border: none;
-    background: black;
+    background: ${props => props.theme.seaWater};
     color: white;
     padding: 0.7rem 1.3rem;
     border-radius: 20px;
     text-decoration: none;
+    transition: all 0.25s ease;
     &:hover {
-      background: blue;
+      background: ${props => props.theme.seaLight};
     }
   }
 `;

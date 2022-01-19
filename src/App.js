@@ -1,5 +1,3 @@
-// components
-
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -7,27 +5,32 @@ import Accommodations from "./pages/Accommodations";
 import Details from "./pages/Details";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
+import Host from "./pages/Host";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-import GlobalStyle from "./globalStyles";
+import styled, { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styles/globalStyles";
+import theme from "./styles/theme";
 
 function App() {
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Nav />
-      <Container>
-        <Routes>
-          <Route path="/" exact="true" element={<Home />} />
-          <Route path="/accommodations" element={<Accommodations />} />
-          <Route path="/contact-us" element={<Contact />} />
-          <Route path="/:id" exact="true" element={<Details />} />
-          <Route path="/login" exact="true" element={<Login />} />
-          <Route path="/admin" exact="true" element={<AdminPage />} />
-        </Routes>
-      </Container>
-    </Router>
+      <Router>
+        <Nav />
+        <Container>
+          <Routes>
+            <Route path="/" exact="true" element={<Home />} />
+            <Route path="/accommodations" element={<Accommodations />} />
+            <Route path="/host" element={<Host />} />
+            <Route path="/contact-us" element={<Contact />} />
+            <Route path="/:id" exact="true" element={<Details />} />
+            <Route path="/login" exact="true" element={<Login />} />
+            <Route path="/admin" exact="true" element={<AdminPage />} />
+          </Routes>
+        </Container>
+      </Router>
+    </ThemeProvider>
   );
 }
 
