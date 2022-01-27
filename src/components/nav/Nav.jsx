@@ -26,7 +26,7 @@ const Nav = () => {
 
 const Header = styled.header`
   padding: 1rem 0;
-  margin-bottom: 1rem;
+  margin-bottom: 7rem;
 `;
 
 const NavContainer = styled.div`
@@ -44,6 +44,7 @@ const NavContainer = styled.div`
 const Logo = styled(Link)`
   flex: 1;
   font-size: 2rem;
+  font-weight: 400;
   color: black;
   text-decoration: none;
 `;
@@ -80,9 +81,19 @@ const StyledLink = styled(NavLink)`
   font-size: 1rem;
   color: black;
   text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 4px 6px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    border: 1px solid ${props => props.theme.seaLight};
+  }
 
   &.active {
-    color: red;
+    border: 1px solid ${props => props.theme.seaLight};
+    border-radius: 20px;
+    padding: 4px 6px;   
   }
 `;
 

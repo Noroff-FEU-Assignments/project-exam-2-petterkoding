@@ -1,31 +1,56 @@
-import React from "react";
-import Banner from "./Banner";
+import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import styled from "styled-components";
+import mountains from "../../assets/mountains.jpg"
 
-const HeroSection = () => {
+const HeroSection = ({ establishments }) => {
+ 
+  const [suggestions, setSuggestions] = useState([]);
+
+  const searchHandler = (e) => {
+    const searchValue = e.target.value;
+    if (searchValue.length > 0) {
+      const suggestion = establishments.filter((el) => el.attributes.title.toLowerCase().includes(searchValue));
+      setSuggestions(suggestion)
+    }else {
+      setSuggestions([])
+    }
+  }
   return (
     <Wrapper>
-      <Banner />
       <Card>
-        <InnerContainer>
           <Heading>Visit Bergen</Heading>
           <Paragraph>
             Holidaze helps you find enjoyable accommodation in Bergen
           </Paragraph>
-          <InputContainer>
-            <Label htmlFor="main-search">Search now</Label>
-            <Input
+        <InputContainer>
+          <Label htmlFor="main-search">Search now</Label>
+          <Input
+              autoComplete="off"
               type="search"
               id="main-search"
               name="main-search"
+              onChange={searchHandler}
               placeholder="Apartments, guesthouses, hotels..."
             />
             <Button>
               <i className="fas fa-search"></i>
             </Button>
+          <SuggestList>
+            {suggestions.map(title => {
+              return (
+                <Suggestions key={title.id}>
+                  <Link
+                    className="styled-links"
+                    to={`accommodations/${title.id}`}>{title.attributes.title}
+                  </Link>
+                </Suggestions>
+              )
+            })}
+          </SuggestList>
           </InputContainer>
-        </InnerContainer>
       </Card>
+      <Image src={mountains} alt="mountain peaks surrounding a lake"/>
     </Wrapper>
   );
 };
@@ -37,48 +62,42 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
+const Image = styled.img`
+  width: 100vw;
+  height: 50vh;
+  object-fit: cover;
+  width: 100%;
+`;
+
 const Card = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: -230px;
-  // bottom: 10%;
-  height: 400px;
-  width: 80%;
-  background: white;
-  transform: translateX(-50%);
-  border-radius: 15px;
-  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Heading = styled.h1`
   font-size: 3rem;
-  color: ${(props) => props.theme.seaBlack};
+  color: black;
 `;
 
 const Paragraph = styled.p`
   font-size: 1.2rem;
   margin: 1rem 0 2rem 0;
-  color: ${(props) => props.theme.darkGrey};
+  color: black;
 `;
 
 const Label = styled.label`
   display: block;
   font-size: 1.2rem;
-  color: black;
+  color: white;
+  font-weight: 600;
 `;
 
 const InputContainer = styled.div`
   position: relative;
   width: 400px;
-  &:after {
-    position: absolute;
-    content: "";
-    width: 80%;
-    height: 2px;
-    left: 0px;
-    bottom: 0px;
-    background: black;
-  }
+  height: 100%;
 `;
 
 const Input = styled.input`
@@ -86,11 +105,11 @@ const Input = styled.input`
   border: none;
   outline: none;
   height: 40px;
-  width: 350px;
   width: 80%;
-  position: relative;
   font-size: 1.2rem;
-
+  padding: 7px;
+  border-bottom: 2px solid ${props => props.theme.orangeWood};
+  
   &::placeholder {
     font-size: 0.9rem;
     color: ${(props) => props.theme.lightGrey};
@@ -107,16 +126,36 @@ const Button = styled.button`
   margin-left: 1rem;
   background: ${(props) => props.theme.seaLight};
   color: white;
-
   &:hover {
     cursor: pointer;
   }
 `;
 
-const InnerContainer = styled.div`
+const SuggestList = styled.ul`
+  background: transparent;
+  width: 80%;
+  height: auto;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
+  left: 0;
+  border: 1px solid #b1b1b1;
 `;
+const Suggestions = styled.li`
+  height: 40px;
+  background: white;
+  list-style: none;
+  border-bottom: 1px solid #3f3f3f55;
+  .styled-links{
+    display: block;
+      width: 100%;
+      height: 100%;
+      color: black;
+      text-transform: capitalize;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      padding-left: 7px;
+      &:hover{
+        background: #d4d4d3;
+      }
+    }
+`;
+

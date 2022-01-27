@@ -1,9 +1,12 @@
 import React from 'react'
+import LearnHosting from '../components/host/LearnHosting'
+import Heading from '../components/common/Heading'
 
 const Host = () => {
     return (
         <div>
-            Host
+            <Heading size="1">Learn from our newcomer</Heading>
+            <LearnHosting/>
         </div>
     )
 }

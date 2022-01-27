@@ -9,7 +9,12 @@ const GlobalStyle = createGlobalStyle`
 
     body{
         font-family: 'Outfit', sans-serif;
-        background: #FEFFEFE;
+        background: #fff;
+    }
+
+    h1{
+        margin-bottom: 2rem;
+        font-family: 'Outfit', sans-serif;
     }
 
     button{

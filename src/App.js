@@ -22,11 +22,15 @@ function App() {
           <Routes>
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/accommodations" element={<Accommodations />} />
+            <Route
+              path="/accommodations/:id"
+              exact="true"
+              element={<Details />}
+            />
             <Route path="/host" element={<Host />} />
             <Route path="/contact-us" element={<Contact />} />
-            <Route path="/:id" exact="true" element={<Details />} />
-            <Route path="/login" exact="true" element={<Login />} />
-            <Route path="/admin" exact="true" element={<AdminPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </Container>
       </Router>
