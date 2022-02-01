@@ -13,6 +13,8 @@ const Details = () => {
 
   const [details, setDetails] = useState([]);
   const [facilities, setFacilities] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [host, setHost] = useState({});
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
@@ -45,7 +47,9 @@ const Details = () => {
         const response = await axios.get(url);
         const json = response.data.data.attributes;
         setDetails(json);
-        setFacilities(json.facilities.data)
+        setFacilities(json.facilities.data);
+        setReviews(json.reviews.data);
+        setHost(json.host.data.attributes);
         console.log("details", json)
     
       } catch (error) {
@@ -64,14 +68,12 @@ const Details = () => {
   
   if (loading) return <p>Loading...</p>
   
-  
-  console.log("new",facilities);
-  
+ 
   return (
     <>
       <FlexContainer>
         <MainImage src={house} alt="establishment"/>
-        {details?.host && <HostDetails details={details.host.data.attributes}/>}
+        <HostDetails details={host}/>
       </FlexContainer>
 
       <Heading size="1">
@@ -84,7 +86,7 @@ const Details = () => {
       
       <Description>{details.description}</Description>
 
-      <Facilities list={facilities} />
+      <Facilities list={facilities} beds={details.beds} />
       
       { details && <ReviewList reviews={details?.reviews?.data} />}
       <iframe
@@ -105,6 +107,7 @@ export default Details;
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2rem;
 `;
 
 const MainImage = styled.img`
@@ -138,7 +141,7 @@ const Rating = styled.span`
 
 const Description = styled.p`
   color: black;
-  max-width: 660px;
+  max-width: 690px;
   margin-bottom: 4rem;
 `;
 
