@@ -27,6 +27,7 @@ const Form = styled.form`
   max-width: 440px;
   box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
   position: relative;
+  margin-top: 2rem;
 
   &:before{
     position: absolute;

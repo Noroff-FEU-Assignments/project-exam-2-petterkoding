@@ -7,13 +7,26 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html, body{
+        height: 100%;
+    }
+
     body{
+        display: flex;
+        flex-direction: column;
         font-family: 'Outfit', sans-serif;
         background: #fff;
     }
 
+    .wrapper{
+        flex: 1 0 auto;
+    }
+
+    footer{
+        flex-shrink: 0;
+    }
+
     h1{
-        margin-bottom: 2rem;
         font-family: 'Outfit', sans-serif;
     }
 

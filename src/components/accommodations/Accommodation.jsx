@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import banner from "../../assets/banner.jpg"
 
 const Accommodation = ({ attributes, id }) => {
-    const { accommodation_type, description, address, title, rating} = attributes;
+    const { accommodation_type, short_description, address, title, rating} = attributes;
 
     return(
         <CardLink to={`./${id}`}>
@@ -14,7 +14,7 @@ const Accommodation = ({ attributes, id }) => {
             <TextContainer>
                 <Info>{accommodation_type}, {address}</Info>
                 <Title>{title}</Title>
-                <Description>{description}</Description>
+                <Description>{short_description}</Description>
                 <Rating>{rating} <i className="fas fa-star"></i></Rating>
             </TextContainer>
         </CardLink>

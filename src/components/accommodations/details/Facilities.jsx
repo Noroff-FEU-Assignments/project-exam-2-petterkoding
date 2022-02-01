@@ -2,16 +2,18 @@ import React from 'react';
 import styled from "styled-components";
 import Heading from '../../common/Heading';
 
-const Facilities = () => {
+const Facilities = ({ list }) => {
+    
+    // const { data } = list;
     return (
         <Container>
             <Heading size="2">What you get</Heading>
             <List>
-                <ListItem>2 beds</ListItem>
-                <ListItem>Dining room</ListItem>
-                <ListItem>Shower</ListItem>
-                <ListItem>Kitchen</ListItem>
-                <ListItem>TV</ListItem>
+                {list.map(el => {
+                    return (
+                        <ListItem key={el.id}>{el.attributes.name}</ListItem>
+                    )
+                })}
             </List>
         </Container>
    );

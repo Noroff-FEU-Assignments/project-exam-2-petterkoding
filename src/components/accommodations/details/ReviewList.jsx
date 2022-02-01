@@ -4,10 +4,12 @@ import Review from "./Review";
 import Heading from '../../common/Heading';
 
 const ReviewList = ({ reviews }) => {
+
+      
     return (
         <>
             <Heading size="2">Reviews (<ReviewCount>{reviews?.length}</ReviewCount>)</Heading>
-            <Grid>
+            <Flex>
                 {
                     reviews?.map(
                         ({ id, attributes: { title, name, rating, review_text } }) => {
@@ -19,16 +21,17 @@ const ReviewList = ({ reviews }) => {
                                 text={review_text} />
                         })
                 }
-                </Grid>
+            </Flex>
         </>
     );
 };
 
 export default ReviewList;
 
-const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+const Flex = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     gap: 2rem;
     margin: 1rem 0 2rem 0;
 `;
