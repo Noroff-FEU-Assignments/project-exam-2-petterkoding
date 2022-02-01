@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import mountains from "../../assets/mountains.jpg"
+
 
 const HeroSection = ({ establishments }) => {
  
@@ -50,7 +50,6 @@ const HeroSection = ({ establishments }) => {
           </SuggestList>
           </InputContainer>
       </Card>
-      <Image src={mountains} alt="mountain peaks surrounding a lake"/>
     </Wrapper>
   );
 };
@@ -62,12 +61,6 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img`
-  width: 100vw;
-  height: 50vh;
-  object-fit: cover;
-  width: 100%;
-`;
 
 const Card = styled.div`
   margin-top: 10rem;

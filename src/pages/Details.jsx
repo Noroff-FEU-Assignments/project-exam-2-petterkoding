@@ -6,7 +6,6 @@ import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
-import house from "../assets/house.jpg";
 import styled from "styled-components";
 
 const Details = () => {
@@ -27,6 +26,9 @@ const Details = () => {
         populate: '*'
       },
       facilities: {
+        populate: '*'
+      },
+      img: {
         populate: '*'
       },
       host: {
@@ -66,13 +68,12 @@ const Details = () => {
     <p>Error occured...</p>
   }
   
-  if (loading) return <p>Loading...</p>
-  
+  if (loading) return <p>Loading...</p> 
  
   return (
     <>
       <FlexContainer>
-        <MainImage src={house} alt="establishment"/>
+        <MainImage src={details.img.data.attributes.url} alt={details.img.data.attributes.alternativeText}/>
         <HostDetails details={host}/>
       </FlexContainer>
 
@@ -88,7 +89,7 @@ const Details = () => {
 
       <Facilities list={facilities} beds={details.beds} />
       
-      { details && <ReviewList reviews={details?.reviews?.data} />}
+      <ReviewList reviews={reviews} />
       <iframe
         title="Map of Bergen"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15769.802395602157!2d5.297999548075794!3d60.39195658115635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46390d4966767d77%3A0x9e42a03eb4de0a08!2sBergen!5e0!3m2!1sno!2sno!4v1643273408372!5m2!1sno!2sno"

@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import banner from "../../assets/banner.jpg"
 
 const Accommodation = ({ attributes, id }) => {
-    const { accommodation_type, short_description, address, title, rating} = attributes;
-
+    const { type,
+        short_description, address,
+        title,
+        rating,
+        img: {
+            data: {
+                attributes: {
+                    url
+                }
+            }
+        }
+    } = attributes;
     return(
         <CardLink to={`./${id}`}>
             <ImgContainer>
-                <Image src={banner} alt={title}/>
+                <Image src={url} alt={title}/>
             </ImgContainer>
             <TextContainer>
-                <Info>{accommodation_type}, {address}</Info>
+                <Info><span>{type}</span>  {address}</Info>
                 <Title>{title}</Title>
                 <Description>{short_description}</Description>
                 <Rating>{rating} <i className="fas fa-star"></i></Rating>
@@ -30,18 +39,23 @@ const CardLink = styled(Link)`
     display: flex;
     justify-content: space-between;
     padding: 2rem 1.2rem;
-    background: #f3f3f3;
+    background: ${props => props.theme.seagull};
     margin: 1rem 0;
     text-decoration: none;
     color: black;
+    transition: all .2s ease;
 
     @media (max-width: 800px) {
         flex-direction: column;
         img{
             width: 100%;
-            height: 280px;
+            height: 290px;
         }
 
+    }
+
+    &:hover{
+        background: #d8d8d8d4;
     }
 `;
 
@@ -60,7 +74,7 @@ const TextContainer = styled.div`
 const Image = styled.img`
     display: block;
     width: 400px;
-    height: 350px;
+    height: 300px;
     object-fit: cover;
 `;
 
@@ -68,6 +82,14 @@ const Info = styled.span`
     display: block;
     color: #a7a7a7;
     margin-top: 2rem;
+
+    span{
+        color: ${props => props.theme.seaLight};
+        border: 1px solid ${props => props.theme.seaLight};
+        border-radius: 15px;
+        padding: 2px 6px;
+        margin-right: .5rem;
+    }
 `;
 
 const Title = styled.h3`

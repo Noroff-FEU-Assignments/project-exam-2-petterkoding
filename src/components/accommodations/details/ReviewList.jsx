@@ -4,8 +4,6 @@ import Review from "./Review";
 import Heading from '../../common/Heading';
 
 const ReviewList = ({ reviews }) => {
-
-      
     return (
         <>
             <Heading size="2">Reviews (<ReviewCount>{reviews?.length}</ReviewCount>)</Heading>
@@ -32,6 +30,7 @@ const Flex = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 2rem;
     margin: 1rem 0 2rem 0;
 `;
