@@ -7,6 +7,7 @@ import Accommodation from './Accommodation';
 const AccommodationList = () => {
 
     const [establishments, setEstablishments] = useState([]);
+    const [filtered, setFiltered] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
 
@@ -35,9 +36,8 @@ const AccommodationList = () => {
 
     const howManyBeds = (e) => {
         const selectedValue = e.target.value;
-        console.log(selectedValue);
-        // const filterEstablishments = establishments.filter(bed => bed.attributes.beds >= selectedValue);
-        // setEstablishments(filterEstablishments);
+        const filterEstablishments = establishments.filter(bed => bed.attributes.beds >= selectedValue);
+        setFiltered(filterEstablishments);
     }
 
     return (

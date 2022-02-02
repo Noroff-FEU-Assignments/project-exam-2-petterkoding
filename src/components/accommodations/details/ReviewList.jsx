@@ -32,7 +32,7 @@ const Flex = styled.div`
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 2rem;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 4rem 0;
 `;
 
 const ReviewCount = styled.span`

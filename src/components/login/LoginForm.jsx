@@ -1,19 +1,71 @@
-import React from "react";
+import React, {useState, useContext} from "react";
+import axios from "axios";
+import AuthContext from "../../context/AuthContext";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../constants/API";
 import styled from "styled-components";
 
 const LoginForm = () => {
+
+  const [auth, setAuth] = useContext(AuthContext);
+  const [submitting, setSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState(null);
+
+  const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
+
+  const { errors, isValid } = formState;
+
+  const history = useNavigate();
+
+  const URL = `${BASE_URL}/api/auth/local/`;
+
+  async function onSubmit(data) {
+    console.log("data", data);
+    setSubmitting(true);
+    setLoginError(null);
+    try {
+      const response = await axios.post(URL, data);
+      setAuth(response.data);
+      history("/admin")
+      console.log(response);
+    } catch (error) {
+      setLoginError(error.toString());
+    } finally {
+      setSubmitting(false);
+    }
+  }
+  
+
   return (
-    <Form>
-      <StyledField>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      {loginError && <p>...Credentials didn't match</p>}
+      <StyledField disabled={submitting}>
         <InputContainer>
           <Label htmlFor="username">Username</Label>
-          <Input type="text" name="username" id="username" placeholder="Username"/>
+          <Input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            {...register("username", {required: true, minLength: 4})}
+          />
+          {errors.username && <p>Username must be min 4 characters</p>}
         </InputContainer>
         <InputContainer>
           <Label htmlFor="password">Password</Label>
-          <Input type="password" name="password" id="password" placeholder="********" />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="********"
+            {...register("password", {required: true, minLength: 5})}
+          />
+          {errors.password && <p>Password must be atleast 5 characters</p>}
         </InputContainer>
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={!isValid}>
+          {submitting ? "Logging in" : "Log in"}
+        </Button>
       </StyledField>
     </Form>
   );
@@ -83,6 +135,15 @@ const Button = styled.button`
   font-size: 1.3rem;
   padding: 0.5rem 1rem;
   border-radius: 15px;
+  background: ${props => props.theme.seaWater};
+  color: white;
+
+    &:disabled{
+      background: ${props => props.theme.lightGrey};
+    }
+    &:hover{
+      cursor: pointer;
+    }
 `;
 
 export default LoginForm;

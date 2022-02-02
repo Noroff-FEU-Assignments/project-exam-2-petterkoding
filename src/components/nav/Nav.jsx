@@ -26,7 +26,7 @@ const Nav = () => {
 
 const Header = styled.header`
   padding: 1rem 0;
-  margin-bottom: 7rem;
+  margin-bottom: 4rem;
 `;
 
 const NavContainer = styled.div`

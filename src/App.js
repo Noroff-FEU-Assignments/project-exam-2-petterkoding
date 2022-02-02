@@ -7,7 +7,7 @@ import Details from "./pages/Details";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import Host from "./pages/Host";
-
+import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyles";
@@ -15,32 +15,34 @@ import theme from "./styles/theme";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <div className="wrapper">
-        <Router>
-          <Nav />
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <div className="wrapper">
+          <Router>
+            <Nav />
 
-          <Container>
-            <Routes>
-              <Route path="/" exact="true" element={<Home />} />
-              <Route path="/accommodations" element={<Accommodations />} />
-              <Route
-                path="/accommodations/:id"
-                exact="true"
-                element={<Details />}
-              />
-              <Route path="/host" element={<Host />} />
-              <Route path="/contact-us" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/admin" element={<AdminPage />} />
-            </Routes>
-          </Container>
+            <Container>
+              <Routes>
+                <Route path="/" exact="true" element={<Home />} />
+                <Route path="/accommodations" element={<Accommodations />} />
+                <Route
+                  path="/accommodations/:id"
+                  exact="true"
+                  element={<Details />}
+                />
+                <Route path="/host" element={<Host />} />
+                <Route path="/contact-us" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={<AdminPage />} />
+              </Routes>
+            </Container>
 
-          <Footer />
-        </Router>
-      </div>
-    </ThemeProvider>
+            <Footer />
+          </Router>
+        </div>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
