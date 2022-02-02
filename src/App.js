@@ -7,6 +7,7 @@ import Details from "./pages/Details";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import Host from "./pages/Host";
+import CreateEstablishment from "./pages/CreateEstablishment";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
@@ -35,6 +36,11 @@ function App() {
                 <Route path="/contact-us" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route
+                  path="/create-establishment"
+                  exact="true"
+                  element={<CreateEstablishment />}
+                />
               </Routes>
             </Container>
 

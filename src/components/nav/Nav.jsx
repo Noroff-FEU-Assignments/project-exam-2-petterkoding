@@ -1,11 +1,30 @@
 import React, {useState, useContext} from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import styled from "styled-components";
 
 const Nav = () => {
 
   const [auth, setAuth] = useContext(AuthContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const history = useNavigate();
+
+  async function logout() {
+    const confirmLogout = window.confirm("You're logging out. Are you sure?")
+
+    if (confirmLogout) {
+      try {
+        setAuth(null);
+        history("/");
+        setMenuOpen(!menuOpen);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+
   return (
     <Header>
       <NavContainer className="nav-container">
@@ -18,9 +37,16 @@ const Nav = () => {
             <StyledLink to="/host">Host</StyledLink>
             <StyledLink to="/contact-us">Contact us</StyledLink>
           </MenuFlex>
+          {auth ? 
+            <button onClick={logout}  className="logout-btn">
+            Logout
+          </button>
+           :
           <Link to="/login" className="login-btn">
             Login
           </Link>
+          }
+          
         </Menu>
       </NavContainer>
     </Header>
@@ -60,7 +86,7 @@ const Menu = styled.nav`
   align-items: center;
   position: relative;
 
-  .login-btn {
+  .login-btn, .logout-btn {
     border: none;
     background: ${props => props.theme.seaWater};
     color: white;
@@ -69,6 +95,7 @@ const Menu = styled.nav`
     text-decoration: none;
     transition: all 0.25s ease;
     &:hover {
+      cursor: pointer;
       background: ${props => props.theme.seaLight};
     }
   }
