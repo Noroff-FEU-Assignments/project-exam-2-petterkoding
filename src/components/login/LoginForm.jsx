@@ -21,14 +21,12 @@ const LoginForm = () => {
   const URL = `${BASE_URL}/api/auth/local/`;
 
   async function onSubmit(data) {
-    console.log("data", data);
     setSubmitting(true);
     setLoginError(null);
     try {
       const response = await axios.post(URL, data);
       setAuth(response.data);
       history("/admin")
-      console.log(response);
     } catch (error) {
       setLoginError(error.toString());
     } finally {
@@ -39,18 +37,18 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {loginError && <p>...Credentials didn't match</p>}
+      {loginError && <p>{loginError}</p>}
       <StyledField disabled={submitting}>
         <InputContainer>
-          <Label htmlFor="username">Username</Label>
+          <Label htmlFor="identifier">Username</Label>
           <Input
             type="text"
-            name="username"
-            id="username"
+            name="identifier"
+            id="identifier"
             placeholder="Username"
-            {...register("username", {required: true, minLength: 4})}
+            {...register("identifier", {required: true, minLength: 4})}
           />
-          {errors.username && <p>Username must be min 4 characters</p>}
+          {errors.username && <p>identifier must be min 4 characters</p>}
         </InputContainer>
         <InputContainer>
           <Label htmlFor="password">Password</Label>

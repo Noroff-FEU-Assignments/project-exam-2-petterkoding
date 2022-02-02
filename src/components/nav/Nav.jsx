@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useState, useContext} from "react";
 import { Link, NavLink } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 import styled from "styled-components";
 
 const Nav = () => {
+
+  const [auth, setAuth] = useContext(AuthContext);
   return (
     <Header>
       <NavContainer className="nav-container">
