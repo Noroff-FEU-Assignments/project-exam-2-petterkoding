@@ -11,5 +11,5 @@ const StyledP = styled.p`
     color: ${props => props.theme.darkGrey};
     font-size: 1.2rem;
     max-width: 660px;
-    margin: 1rem 0 2rem 0;
+    margin: 0.5rem 0;
 `;

@@ -35,9 +35,9 @@ function App() {
                 <Route path="/host" element={<Host />} />
                 <Route path="/contact-us" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin" element={<AdminPage />}></Route>
                 <Route
-                  path="/create-establishment"
+                  path="admin/create-establishment"
                   exact="true"
                   element={<CreateEstablishment />}
                 />

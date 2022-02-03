@@ -38,15 +38,15 @@ const Nav = () => {
             <StyledLink to="/contact-us">Contact us</StyledLink>
           </MenuFlex>
           {auth ? 
-            <button onClick={logout}  className="logout-btn">
-            Logout
-          </button>
+            <>
+              <StyledLink to="/admin" className="admin-link"><i className="fas fa-user"></i>Admin</StyledLink>
+              <button onClick={logout}  className="logout-btn">Logout</button>
+            </>
            :
           <Link to="/login" className="login-btn">
             Login
           </Link>
           }
-          
         </Menu>
       </NavContainer>
     </Header>
@@ -94,6 +94,7 @@ const Menu = styled.nav`
     border-radius: 20px;
     text-decoration: none;
     transition: all 0.25s ease;
+    margin-left: 2rem;
     &:hover {
       cursor: pointer;
       background: ${props => props.theme.seaLight};
@@ -125,6 +126,15 @@ const StyledLink = styled(NavLink)`
     border-radius: 20px;
     padding: 4px 6px;   
   }
+
+  &.admin-link{
+    display: flex;
+    font-weight: 600;
+    i{
+      padding-right: 3px;
+    }
+  }
 `;
+
 
 export default Nav;

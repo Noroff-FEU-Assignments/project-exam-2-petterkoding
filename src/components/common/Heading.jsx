@@ -7,4 +7,3 @@ const Heading = ({ size, children }) => {
 
 export default Heading;
 
-
