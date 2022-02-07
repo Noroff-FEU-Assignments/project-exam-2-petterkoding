@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import useAxios from "../../hooks/useAxios";
+import TabLink from './TabLink';
+import styled from "styled-components";
 
 
 const Messages = () => {
@@ -9,7 +11,7 @@ const Messages = () => {
     const http = useAxios();
 
     useEffect(() => {
-        async function getMessages() {
+        async function getData() {
             try {
                 const response = await http.get("/api/messages");
                 const json = response.data.data;
@@ -19,12 +21,25 @@ const Messages = () => {
             }
         }
         
-        getMessages();
+        getData();
         //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     
-  return <div>Messages</div>;
+    return (
+        <Container>
+            {messages.map((msg, id) =>
+                <TabLink
+                    key={id}
+                   attributes={msg.attributes}
+                />
+            )}
+        </Container>
+  );
 };
 
 export default Messages;
+
+const Container = styled.div`
+    width: 100%;
+`;

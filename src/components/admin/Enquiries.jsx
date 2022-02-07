@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import useAxios from "../../hooks/useAxios";
+import TabLink from './TabLink';
+import styled from "styled-components";
 
 
 const Enquiries = () => {
@@ -21,10 +23,23 @@ const Enquiries = () => {
         
         getEnquiries();
         //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     
-  return <div>Enquiry</div>;
+    return (
+        <Container>
+            {enquiries.map((enq, id) =>
+                <TabLink
+                    key={id}
+                   attributes={enq.attributes}
+                />
+            )}
+        </Container>
+  );
 };
 
 export default Enquiries;
+
+const Container = styled.div`
+    width: 100%;
+`;

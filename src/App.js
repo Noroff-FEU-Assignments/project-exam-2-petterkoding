@@ -6,6 +6,8 @@ import Accommodations from "./pages/Accommodations";
 import Details from "./pages/Details";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
+import Messages from "./components/admin/Messages";
+import Enquiries from "./components/admin/Enquiries";
 import Host from "./pages/Host";
 import CreateEstablishment from "./pages/CreateEstablishment";
 import { AuthProvider } from "./context/AuthContext";
@@ -22,7 +24,6 @@ function App() {
         <div className="wrapper">
           <Router>
             <Nav />
-
             <Container>
               <Routes>
                 <Route path="/" exact="true" element={<Home />} />
@@ -35,7 +36,10 @@ function App() {
                 <Route path="/host" element={<Host />} />
                 <Route path="/contact-us" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={<AdminPage />}></Route>
+                <Route path="/admin" element={<AdminPage />}>
+                  <Route path="/admin" element={<Messages />} />
+                  <Route path="enquiries" element={<Enquiries />} />
+                </Route>
                 <Route
                   path="admin/create-establishment"
                   exact="true"
@@ -43,7 +47,6 @@ function App() {
                 />
               </Routes>
             </Container>
-
             <Footer />
           </Router>
         </div>

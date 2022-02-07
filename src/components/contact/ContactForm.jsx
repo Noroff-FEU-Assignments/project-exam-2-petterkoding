@@ -1,25 +1,89 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { BASE_URL } from "../../constants/API";
 import styled from "styled-components";
 
 const ContactForm = () => {
+
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+
+  const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
+
+  const { errors, isValid } = formState;
+
+
+  async function onSubmit(data) {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const response = await axios.post(`${BASE_URL}/api/messages`, data);
+      console.log(response);
+    } catch (error) {
+      setError(error.toString());
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
-    <Form>
-      <StyledField>
-        <InputContainer>
-          <Label htmlFor="name">Name</Label>
-          <Input type="text" name="name" id="name" placeholder="Your name" />
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="email">Email</Label>
-          <Input type="email" name="email" id="email" placeholder="eg. you@mail.com" />
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="message">Message</Label>
-          <TextArea type="textarea" name="message" id="message" placeholder="Start writing here" />
-        </InputContainer>
-        <Button type="submit">Send</Button>
-      </StyledField>
-    </Form>
+    <>
+      {error && <p>Ooops...{error}</p>}
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <StyledField disabled={submitting}>
+          <InputContainer>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Your name"
+              {...register("name", {required: true, minLength: 2})}
+            />
+            {errors.name && <p>Name is too short</p>}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="subject">Subject</Label>
+            <Input
+              type="text"
+              name="subject"
+              id="subject"
+              placeholder="Subject"
+              {...register("subject", {required: true, minLength: 5})}
+            />
+            {errors.subject && <p>Subject is required</p>}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="eg. you@mail.com"
+              {...register("email", {
+                required: true, pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              }})}
+            />
+            {errors.email && <p>Must be a valid email</p>}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="message">Message</Label>
+            <TextArea
+              type="textarea"
+              name="message"
+              id="message"
+              placeholder="Start writing here"
+              {...register("message", {required:true, minLength: 10})}
+            />
+            {errors.message && <p>Message must be atleast 10 characters</p>}
+          </InputContainer>
+          <Button type="submit" disabled={!isValid}>Send</Button>
+        </StyledField>
+        </Form>
+      </>
   );
 };
 

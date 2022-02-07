@@ -11,7 +11,7 @@ const WelcomeUser = ({username}) => {
         <Container>
               <Heading size="1">Hey, {username}</Heading>
               <InnerContainer>
-                <Heading size="2">Create and Publish</Heading>
+                <Heading size="2">Create and Publish <span><i className="fas fa-pencil-alt"></i></span></Heading>
                 <Paragraph>Add new establishments by filling out the form.</Paragraph>
                 <Button to="./create-establishment">Create</Button>
               </InnerContainer>

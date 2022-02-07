@@ -12,10 +12,15 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body{
-        display: flex;
-        flex-direction: column;
+        
         font-family: 'Outfit', sans-serif;
         background: #fff;
+    }
+
+    #root{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 
     .wrapper{

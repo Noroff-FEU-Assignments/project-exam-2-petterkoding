@@ -17,7 +17,6 @@ const AccommodationList = () => {
             try {
                 const response = await axios.get(url);
                 const json = response.data.data;
-                console.log(json)
                 setEstablishments(json)
             } catch (error) {
                 console.log(error);
