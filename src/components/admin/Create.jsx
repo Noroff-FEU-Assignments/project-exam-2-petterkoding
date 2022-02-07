@@ -1,18 +1,19 @@
 import React, { useState, useContext} from 'react';
 import useAxios from "../../hooks/useAxios";
-import { BASE_URL } from "../../constants/API";
 import axios from "axios";
+import { BASE_URL } from '../../constants/API';
 import AuthContext from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import Heading from '../common/Heading';
 import styled from "styled-components";
+import facility from "./facility.json"
 
 const Create = () => {
 
-    // const [newEstablishment, setNewEstablishment] = useState({});
     const [publishError, setPublishError] = useState(null);
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
+    const [facilities, setFacilities] = useState(facility);
 
     const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
 
@@ -24,18 +25,19 @@ const Create = () => {
         e.preventDefault();
         setSubmitting(true);
         setPublishError(null);
-        // console.log(data)
-        let formData = new FormData();
-        formData.append("file", data.image[0])
-        formData.append("data", data)
+        console.log(data)
+        // let formData = new FormData();
+        // formData.append("files.images", data.img[0]);
+        // formData.append("data", data);
+        
 
         try {
             const response = await http.post('/api/establishments', {
-                "Content-type": "multipart/form-data",
+                // "Content-Type": "multipart/form-data",
                 headers: {
-                    "Authorization": `Bearer ${auth.jwt}`,
+                    Authorization: `Bearer ${auth.jwt}`,
                 },
-                data: formData
+                data: data
         });
             console.log(response)
         } catch (error) {
@@ -53,7 +55,7 @@ const Create = () => {
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Fieldset>
                     <InputField>
-                        <Label htmlFor="title">Title</Label>
+                        <Label htmlFor="title">Title:</Label>
                         <Input
                             type="text"
                             name="title"
@@ -62,7 +64,7 @@ const Create = () => {
                         {errors.title && <p>Title is too short</p>}
                     </InputField>
                     <InputField>
-                        <Label htmlFor="address">Address</Label>
+                        <Label htmlFor="address">Address:</Label>
                         <Input
                             type="text"
                             name="address"
@@ -71,7 +73,7 @@ const Create = () => {
                         {errors.address && <p>Address is required</p>}
                     </InputField>
                     <InputField>
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">Description:</Label>
                         <Textarea
                             type="text"
                             name="description"
@@ -80,17 +82,16 @@ const Create = () => {
                         {errors.description && <p>Description is too short</p>}
                     </InputField>
                     <InputField>
-                        <Label htmlFor="shortDescription">Short Description</Label>
+                        <Label htmlFor="short_description">Short Description:</Label>
                         <Textarea
                             type="text"
-                            name="shortDescription"
-                            id="shortDescription"
-                            {...register("shortDescription", {required: true, minLength: 10})}/>
-                        {errors.shortDescription && <p>Description is too short</p>}
+                            name="short_description"
+                            {...register("short_description", {required: true, minLength: 10})}/>
+                        {errors.short_description && <p>Description is too short</p>}
                     </InputField>
                     <Flex>
                         <InputField>
-                            <Label htmlFor="title">Type</Label>
+                            <Label htmlFor="title">Type:</Label>
                             <SmallInput
                                 type="text"
                                 name="type"
@@ -99,7 +100,7 @@ const Create = () => {
                             {errors.title && <p>Type is required</p>}
                         </InputField>
                         <InputField>
-                            <Label htmlFor="rating">Rating</Label>
+                            <Label htmlFor="rating">Rating:</Label>
                             <SmallInput
                                 type="number"
                                 name="rating"
@@ -108,7 +109,7 @@ const Create = () => {
                             {errors.rating && <p>Rating must be a value between 1-10</p>}
                         </InputField>
                         <InputField>
-                            <Label htmlFor="beds">Beds</Label>
+                            <Label htmlFor="beds">Beds:</Label>
                             <SmallInput
                                 type="number"
                                 name="beds"
@@ -118,24 +119,33 @@ const Create = () => {
                         </InputField>
                     </Flex>
                     <InputField>
-                        <Label htmlFor="facilities">Facilities</Label>
-                        <SmallInput
-                            type="text"
-                            name="facilities"
-                            id="facilities"
-                            {...register("facilities", { required: true})} />
-                            {errors.facilities && <p>Add available facility</p>}
+                        <Heading size="4">Add Facilities</Heading>
+                        <Grid>
+                            {facility.map((el) => {
+                                return (
+                                    <CheckboxContainer key={el.id}>
+                                        <Label htmlFor={el.name}>{el.name}</Label>
+                                        <input
+                                            type="checkbox"
+                                            name="facilities"
+                                            value={el.id}
+                                            {...register("facilities", {required: true})}/>
+                                    </CheckboxContainer>
+                                );
+                            })}
+                        </Grid>
                     </InputField>
 
-                    <InputField>
-                        <Label htmlFor="image">Image</Label>
+                    {/* <InputField>
+                        <Label htmlFor="img">Image</Label>
                         <Input
+                          
                             type="file"
-                            name="image"
-                            id="image"
-                            {...register("image", {required: false})}/>
-                        {errors.image && <p>Image is required</p>}
-                    </InputField>
+                            name="img"
+                            // id="image"
+                            {...register("img", {required: false})}/>
+                        {errors.img && <p>Image is required</p>}
+                    </InputField> */}
                  
                     <Button type="submit" disabled={!isValid}>
                         {submitting ? "Publishing..." : "Publish"}
@@ -160,6 +170,33 @@ const Flex = styled.div`
     gap: 2rem;
 `;
 
+const Grid = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+`;
+
+const CheckboxContainer = styled.div`
+    width: auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    padding: 1rem 1rem;
+    background: #f5f1f1;
+    border-radius: 15px;
+    text-align: center;
+
+    label{
+        white-space: nowrap;
+        font-weight: 400;
+        margin-bottom: 0.2rem;
+    }
+    
+        input{
+            width: 30px;
+            height: 30px;
+        }
+    
+`;
 
 const InputField = styled.div`
     margin: 0.8rem 0 1.3rem 0;
@@ -171,7 +208,7 @@ const Fieldset = styled.fieldset`
 `;
 
 const Label = styled.label`
-    font-weight: 600;
+    font-weight: 800;
     display: block;
 `;
 
