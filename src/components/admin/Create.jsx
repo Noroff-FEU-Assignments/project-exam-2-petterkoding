@@ -24,23 +24,25 @@ const Create = () => {
     const corsFix = corsURL + BASE_URL;
   
 
-    async function onSubmit(datas, e) {
+    async function onSubmit(data, e) {
         e.preventDefault();
         setSubmitting(true);
         setPublishError(null);
         const formData = new FormData(e.target);
+        // formData.append("files.image", data.img[0]);
+        // formData.append("data.name", JSON.stringify(data));
                 
         try {
             const response = await fetch(`${corsFix}/api/establishments`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${auth.jwt}`,
-                },
                 body: formData,
+                headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${auth.jwt}`,
+            },
             });
-            const data = await response.json();
-            console.log(response, data);
+            const json = await response.json();
+            console.log(response, json);
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
