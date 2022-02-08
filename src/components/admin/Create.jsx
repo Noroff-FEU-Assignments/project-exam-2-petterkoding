@@ -1,4 +1,6 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
+// import axios from "axios";
+// import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
@@ -12,7 +14,6 @@ const Create = () => {
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
     const [facilities, setFacilities] = useState(facility);
-    const [image, setImage] = useState(null);
 
     const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
 
@@ -21,26 +22,22 @@ const Create = () => {
     const corsURL = "https://noroffcors.herokuapp.com/";
 
     const corsFix = corsURL + BASE_URL;
-    
-    async function onSubmit(data, e) {
+  
+
+    async function onSubmit(datas, e) {
         e.preventDefault();
-        const formData = new FormData(e.target);
         setSubmitting(true);
         setPublishError(null);
-
-        // formData.append("data", data);
-        // formData.append("files.img", data.img[0]);
-
-        console.log(formData)
-            
+        const formData = new FormData(e.target);
+                
         try {
-            const response = await fetch(`${corsFix}/api/establishments` , {
+            const response = await fetch(`${corsFix}/api/establishments`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${auth.jwt}`,
                 },
-                body: formData
+                body: formData,
             });
             const data = await response.json();
             console.log(response, data);
@@ -141,13 +138,10 @@ const Create = () => {
                     </InputField>
 
                     <InputField>
-                        
                         <Label htmlFor="img">Image</Label>
                         <Input
                             type="file"
-                            // value={image}
                             name="img"
-                            // id="image"
                             {...register("img", {required: true})}/>
                         {errors.img && <p>Image is required</p>}
                     </InputField>

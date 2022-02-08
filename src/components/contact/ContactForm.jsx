@@ -18,8 +18,11 @@ const ContactForm = () => {
   async function onSubmit(data) {
     setSubmitting(true);
     setError(null);
+    console.log(data)
     try {
-      const response = await axios.post(`${BASE_URL}/api/messages`, data);
+      const response = await axios.post(`${BASE_URL}/api/messages`, {
+        data: data,
+      });
       console.log(response);
     } catch (error) {
       setError(error.toString());
@@ -38,7 +41,6 @@ const ContactForm = () => {
             <Input
               type="text"
               name="name"
-              id="name"
               placeholder="Your name"
               {...register("name", {required: true, minLength: 2})}
             />
@@ -49,7 +51,6 @@ const ContactForm = () => {
             <Input
               type="text"
               name="subject"
-              id="subject"
               placeholder="Subject"
               {...register("subject", {required: true, minLength: 5})}
             />
@@ -59,26 +60,24 @@ const ContactForm = () => {
             <Label htmlFor="email">Email</Label>
             <Input
               type="email"
-              name="email"
-              id="email"
+              name="email_from"
               placeholder="eg. you@mail.com"
-              {...register("email", {
+              {...register("email_from", {
                 required: true, pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               }})}
             />
-            {errors.email && <p>Must be a valid email</p>}
+            {errors.email_from && <p>Must be a valid email</p>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="message">Message</Label>
             <TextArea
               type="textarea"
-              name="message"
-              id="message"
+              name="text"
               placeholder="Start writing here"
-              {...register("message", {required:true, minLength: 10})}
+              {...register("text", {required:true, minLength: 10})}
             />
-            {errors.message && <p>Message must be atleast 10 characters</p>}
+            {errors.text && <p>Message must be atleast 10 characters</p>}
           </InputContainer>
           <Button type="submit" disabled={!isValid}>Send</Button>
         </StyledField>
