@@ -1,7 +1,5 @@
 import React, { useState, useContext} from 'react';
 import useAxios from "../../hooks/useAxios";
-import axios from "axios";
-import { BASE_URL } from '../../constants/API';
 import AuthContext from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import Heading from '../common/Heading';
@@ -14,6 +12,7 @@ const Create = () => {
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
     const [facilities, setFacilities] = useState(facility);
+    const [image, setImage] = useState(null);
 
     const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
 
@@ -23,21 +22,20 @@ const Create = () => {
     
     async function onSubmit(data, e) {
         e.preventDefault();
+        const formData = new FormData();
         setSubmitting(true);
         setPublishError(null);
         console.log(data)
-        // let formData = new FormData();
-        // formData.append("files.images", data.img[0]);
-        // formData.append("data", data);
         
-
+        formData.append("files.image", data.img[0]);
+        formData.append("data", JSON.stringify(data));
         try {
             const response = await http.post('/api/establishments', {
-                // "Content-Type": "multipart/form-data",
+                "Content-Type": "multipart/form-data",
                 headers: {
                     Authorization: `Bearer ${auth.jwt}`,
                 },
-                data: data
+                data: formData
         });
             console.log(response)
         } catch (error) {
@@ -121,7 +119,7 @@ const Create = () => {
                     <InputField>
                         <Heading size="4">Add Facilities</Heading>
                         <Grid>
-                            {facility.map((el) => {
+                            {facilities.map((el) => {
                                 return (
                                     <CheckboxContainer key={el.id}>
                                         <Label htmlFor={el.name}>{el.name}</Label>
@@ -136,16 +134,17 @@ const Create = () => {
                         </Grid>
                     </InputField>
 
-                    {/* <InputField>
+                    <InputField>
+                        
                         <Label htmlFor="img">Image</Label>
                         <Input
-                          
                             type="file"
+                            // value={image}
                             name="img"
                             // id="image"
-                            {...register("img", {required: false})}/>
+                            {...register("img", {required: true})}/>
                         {errors.img && <p>Image is required</p>}
-                    </InputField> */}
+                    </InputField>
                  
                     <Button type="submit" disabled={!isValid}>
                         {submitting ? "Publishing..." : "Publish"}

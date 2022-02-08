@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const HostDetails = ({ details }) => {
 
-  const {name, description, rating, phone, email, picture:{data: {attributes:{url}}}} = details;
+  const { name, description, rating, phone, email, picture: { data: { attributes: { url } } } } = details;
 
     return(
         < Card >

@@ -40,7 +40,6 @@ const Details = () => {
     encodeValuesOnly: true,
   });
 
-  // const url = `${BASE_URL}${ESTABLISHMENTS}/${id}${POPULATE}*`;
   const url = `${BASE_URL}${ESTABLISHMENTS}/${id}?${query}`;
 
   useEffect(() => {
@@ -74,7 +73,7 @@ const Details = () => {
     <>
       <FlexContainer>
         <MainImage src={details.img.data.attributes.url} alt={details.img.data.attributes.alternativeText}/>
-        <HostDetails details={host}/>
+        <HostDetails details={host} />
       </FlexContainer>
 
       <Heading size="1">
@@ -114,6 +113,7 @@ const FlexContainer = styled.div`
 const MainImage = styled.img`
   display: block;
   width: 100%;
+  max-width: 750px;
   height: auto;
   object-fit: cover;
   margin-right: 3rem;
