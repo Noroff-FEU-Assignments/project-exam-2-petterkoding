@@ -1,6 +1,6 @@
 import React, { useState, useContext} from 'react';
-import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
+import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
 import Heading from '../common/Heading';
 import styled from "styled-components";
@@ -18,26 +18,32 @@ const Create = () => {
 
     const { errors, isValid } = formState;
 
-    const http = useAxios();
+    const corsURL = "https://noroffcors.herokuapp.com/";
+
+    const corsFix = corsURL + BASE_URL;
     
     async function onSubmit(data, e) {
         e.preventDefault();
-        const formData = new FormData();
+        const formData = new FormData(e.target);
         setSubmitting(true);
         setPublishError(null);
-        console.log(data)
-        
-        formData.append("files.image", data.img[0]);
-        formData.append("data", JSON.stringify(data));
+
+        // formData.append("data", data);
+        // formData.append("files.img", data.img[0]);
+
+        console.log(formData)
+            
         try {
-            const response = await http.post('/api/establishments', {
-                "Content-Type": "multipart/form-data",
+            const response = await fetch(`${corsFix}/api/establishments` , {
+                method: "POST",
                 headers: {
+                    "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${auth.jwt}`,
                 },
-                data: formData
-        });
-            console.log(response)
+                body: formData
+            });
+            const data = await response.json();
+            console.log(response, data);
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
