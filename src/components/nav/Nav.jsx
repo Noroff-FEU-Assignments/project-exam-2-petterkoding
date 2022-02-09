@@ -63,7 +63,7 @@ const Nav = () => {
 
 const Header = styled.header`
   padding: 1rem 0;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   height: 65px;
   box-shadow: 1px 3px 20px rgba(0,0,0,0.1);
 
@@ -150,7 +150,7 @@ const Menu = styled.nav`
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 65px);
     background: ${props=>props.theme.clouds};
 
     &.navOpen{

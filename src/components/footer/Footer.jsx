@@ -7,24 +7,20 @@ const Footer = () => {
             <Container>
                 <FlexContainer>
                     <div>
-                        Logo
+                        Holidaze
                     </div>
-                    <div>
-                        <ul>
-                            <li>List</li>
-                            <li>List</li>
-                            <li>List</li>
-                            <li>List</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul>
-                            <li>List</li>
-                            <li>List</li>
-                            <li>List</li>
-                            <li>List</li>
-                        </ul>
-                    </div>
+                    <List>
+                        <li>About us</li>
+                        <li>Learn hosting</li>
+                        <li>Articles</li>
+                        <li>FAQ</li>
+                    </List>
+                    <List>
+                        <li>Help</li>
+                        <li>Contact</li>
+                        <li>Insurance</li>
+                        <li>Policy</li>
+                    </List>
                 </FlexContainer>
             </Container>
         </SFooter>
@@ -34,9 +30,10 @@ const Footer = () => {
 export default Footer;
 
 const SFooter = styled.footer`
-    background: ${props=>props.theme.clouds};
-    height: auto;
+    background: ${props=>props.theme.seaBlack};
+    height: 180px;
     margin-top: 7rem;
+    color: white;
 `;
 
 const Container = styled.div`
@@ -46,7 +43,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 4rem;
+    padding: 4rem 1rem;
 `;
 
 const FlexContainer = styled.div`
@@ -54,4 +51,8 @@ const FlexContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+`;
+
+const List = styled.ul`
+    list-style: none;
 `;

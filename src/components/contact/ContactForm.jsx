@@ -33,8 +33,6 @@ const ContactForm = () => {
   }
 
   return (
-    <>
-
       <Form onSubmit={handleSubmit(onSubmit)}>
         {submitting && <CreateMessage type="success">Message sent!</CreateMessage>}
         <StyledField>
@@ -84,7 +82,6 @@ const ContactForm = () => {
           <Button type="submit" disabled={!isValid}>Send</Button>
         </StyledField>
         </Form>
-      </>
   );
 };
 
@@ -156,7 +153,7 @@ const Input = styled.input`
 const TextArea = styled.textarea`
   border: none;
   outline: none;
-  height: 250px;
+  height: 200px;
   width: 100%;
   resize: none;
   background: none;

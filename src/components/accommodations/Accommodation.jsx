@@ -47,10 +47,10 @@ const CardLink = styled(Link)`
 
     @media (max-width: 800px) {
         flex-direction: column;
-        img{
+        /* img{
             width: 100%;
             height: 290px;
-        }
+        } */
 
     }
 
@@ -67,7 +67,6 @@ const TextContainer = styled.div`
     margin-left: 2rem;
     @media (max-width: 800px) {
         margin-left: 0;
-
     }
 `;
 
@@ -76,6 +75,15 @@ const Image = styled.img`
     width: 400px;
     height: 300px;
     object-fit: cover;
+
+    @media (max-width: 800px) {
+        width: 100%;
+        height: 390px;
+    }
+    @media (max-width: 680px) {
+        width: 100%;
+        height: 190px;
+    }
 `;
 
 const Info = styled.span`

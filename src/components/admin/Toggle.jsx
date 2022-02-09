@@ -3,8 +3,6 @@ import formatDate from '../../js/DateFormat';
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-
-
 const Toggle = ({ children, title, subject, date }) => {
   
   const [toggle, setToggle] = useState(false);

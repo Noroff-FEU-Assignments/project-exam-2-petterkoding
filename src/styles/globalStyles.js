@@ -11,8 +11,7 @@ const GlobalStyle = createGlobalStyle`
         height: 100%;
     }
 
-    body{
-        
+    body{ 
         font-family: 'Outfit', sans-serif;
         background: #fff;
     }
