@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import useAxios from "../../hooks/useAxios";
 import TabLink from './TabLink';
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 
@@ -27,19 +28,20 @@ const Messages = () => {
 
     
     return (
-        <Container>
-            {messages.map((msg, id) =>
-                <TabLink
-                    key={id}
-                   attributes={msg.attributes}
-                />
+        <Container
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+            exit={{ opacity: 0, y: 10, transition: { duration: 1 } }}>
+            
+            {messages?.map((msg, id) =>
+                <TabLink key={id} attributes={msg.attributes}/>
             )}
         </Container>
-  );
+    );
 };
 
 export default Messages;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
     width: 100%;
 `;

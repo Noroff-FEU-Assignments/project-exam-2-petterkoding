@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import formatDate from '../../js/DateFormat';
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
-const Toggle = ({children, title, subject, date}) => {
-    const [toggle, setToggle] = useState(false);
+
+
+const Toggle = ({ children, title, subject, date }) => {
+  
+  const [toggle, setToggle] = useState(false);
 
     // title is supposed to be NAME!!!!!!
     return (
@@ -20,13 +24,13 @@ const Toggle = ({children, title, subject, date}) => {
 
 export default Toggle;
 
-const Tab = styled.div`
-  background: #f0f0f0;
+const Tab = styled(motion.div)`
+  background:#f0f0f0;
   color: #4e4e4e;
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
-  transition: all 0.2s ease;
+  transition: all 1s ease;
     &:hover{
       cursor: pointer;
       background: white;

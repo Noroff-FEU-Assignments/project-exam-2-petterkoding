@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import useAxios from "../../hooks/useAxios";
 import TabLink from './TabLink';
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 
-const Enquiries = () => {
 
-    const [enquiries, setEnquiries] = useState([]);
+const Enquiries = () => {
+const [enquiries, setEnquiries] = useState([]);
 
     const http = useAxios();
 
@@ -25,21 +26,23 @@ const Enquiries = () => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
     
     return (
-        <Container>
-            {enquiries.map((enq, id) =>
-                <TabLink
-                    key={id}
-                   attributes={enq.attributes}
-                />
-            )}
-        </Container>
-  );
+            <Container
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+                exit={{ opacity: 0, y: 10, transition: { duration: 2 } }}>
+                
+                {enquiries?.map((enq, id) =>
+                    <TabLink key={id} attributes={enq.attributes}/>
+                )}
+            </Container> 
+    );
 };
 
 export default Enquiries;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
     width: 100%;
 `;

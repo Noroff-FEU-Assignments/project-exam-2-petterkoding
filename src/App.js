@@ -21,9 +21,9 @@ function App() {
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <div className="wrapper">
-          <Router>
-            <Nav />
+        <Router>
+          <Nav />
+          <div className="wrapper">
             <Container>
               <Routes>
                 <Route path="/" exact="true" element={<Home />} />
@@ -47,9 +47,9 @@ function App() {
                 />
               </Routes>
             </Container>
-            <Footer />
-          </Router>
-        </div>
+          </div>
+          <Footer />
+        </Router>
       </ThemeProvider>
     </AuthProvider>
   );

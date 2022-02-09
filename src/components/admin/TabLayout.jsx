@@ -23,9 +23,9 @@ const TabLayout = () => {
             <Tab to="/admin/?messages" style={activeStyle}>Messages</Tab>
             <Tab to="enquiries">Enquiries</Tab>
             <Card>
-            <InnerContainer>
-                <Outlet/>
-            </InnerContainer>
+                <InnerContainer>
+                    <Outlet />        
+                </InnerContainer>
             </Card>
         </CardContainer>
     </Wrapper>
