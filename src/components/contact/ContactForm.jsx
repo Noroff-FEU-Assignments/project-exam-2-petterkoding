@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { BASE_URL } from "../../constants/API";
+import CreateMessage from "../common/CreateMessage";
 import styled from "styled-components";
 
 const ContactForm = () => {
@@ -10,7 +11,7 @@ const ContactForm = () => {
   const [error, setError] = useState(null);
 
 
-  const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
+  const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
 
   const { errors, isValid } = formState;
 
@@ -20,31 +21,32 @@ const ContactForm = () => {
     setError(null);
     console.log(data)
     try {
-      const response = await axios.post(`${BASE_URL}/api/messages`, {
+      const response = await axios.post(`${BASE_URL}/api/messsages`, {
         data: data,
       });
       console.log(response);
     } catch (error) {
       setError(error.toString());
     } finally {
-      setSubmitting(false);
+      reset();
     }
   }
 
   return (
     <>
-      {error && <p>Ooops...{error}</p>}
+
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <StyledField disabled={submitting}>
+        {submitting && <CreateMessage type="success">Message sent!</CreateMessage>}
+        <StyledField>
           <InputContainer>
             <Label htmlFor="name">Name</Label>
             <Input
               type="text"
-              name="name"
+              name="title"
               placeholder="Your name"
-              {...register("name", {required: true, minLength: 2})}
+              {...register("title", {required: true, minLength: 2})}
             />
-            {errors.name && <p>Name is too short</p>}
+            {errors.title && <p>Name is too short</p>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="subject">Subject</Label>
@@ -177,6 +179,10 @@ const Button = styled.button`
   font-size: 1.3rem;
   padding: 0.5rem 1rem;
   border-radius: 15px;
+
+  @media (max-width: 680px){
+    padding: 1rem 2rem;
+  }
 `;
 
 export default ContactForm;

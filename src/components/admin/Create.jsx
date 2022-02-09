@@ -39,7 +39,7 @@ const Create = () => {
                 headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${auth.jwt}`,
-            },
+                },
             });
             const json = await response.json();
             console.log(response, json);

@@ -21,4 +21,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 7rem;
+
+  @media (max-width: 680px){
+    margin-top: 0rem;
+  }
 `;

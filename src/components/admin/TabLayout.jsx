@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation} from 'react-router-dom';
 import Heading from '../common/Heading';
 import styled from "styled-components";
 
-const Layout = () => {
+const TabLayout = () => {
     
     const {pathname} = useLocation();
     let activeStyle;
@@ -32,14 +32,14 @@ const Layout = () => {
     );
 };
 
-export default Layout;
+export default TabLayout;
 
 const Wrapper = styled.div`
     margin: 5rem 0 4rem 0;
 `;
 
 const InnerContainer = styled.div`
-    padding: 2rem;
+    padding: 1rem;
     width: 100%;
     height: 100%;
 `;

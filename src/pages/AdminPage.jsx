@@ -1,6 +1,6 @@
 import React, { useContext} from "react";
 import {useNavigate } from "react-router-dom";
-import Layout from "../components/admin/Layout";
+import TabLayout from "../components/admin/TabLayout";
 import WelcomeUser from "../components/admin/WelcomeUser";
 import AuthContext from "../context/AuthContext";
 
@@ -21,7 +21,7 @@ const AdminPage = () => {
       {auth &&
       <>
         <WelcomeUser username={username} />
-        <Layout/>
+        <TabLayout/>
       </>
       }
     </>

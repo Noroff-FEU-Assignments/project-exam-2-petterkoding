@@ -5,11 +5,16 @@ import { Link } from 'react-router-dom';
 
 import styled from "styled-components";
 
-const WelcomeUser = ({username}) => {
+const WelcomeUser = ({ username }) => {
+    
+    let name = username;
+    if (!name) {
+        name = "Admin";
+    }
 
       return(
         <Container>
-              <Heading size="1">Hey, {username}</Heading>
+              <Heading size="1">Hey, {name}👋</Heading>
               <InnerContainer>
                 <Heading size="2">Create and Publish <span><i className="fas fa-pencil-alt"></i></span></Heading>
                 <Paragraph>Add new establishments by filling out the form.</Paragraph>
@@ -44,5 +49,5 @@ const Button = styled(Link)`
 
 
 const InnerContainer = styled.div`
-    margin-top: 2rem;
+    margin-top: 3rem;
 `;

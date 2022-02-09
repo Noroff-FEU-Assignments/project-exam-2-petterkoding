@@ -24,30 +24,38 @@ const Nav = () => {
     }
   }
 
+  const menuToggler = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
 
   return (
     <Header>
       <NavContainer className="nav-container">
-        <Logo to="/" exact="true" className="logo">
+        <Logo to="/" exact="true" className="logo" onClick={closeMenu}>
           Holidaze
         </Logo>
-        <Menu>
+        <Menu className={menuOpen ? "navOpen" : "navClosed"}>
           <MenuFlex>
-            <StyledLink to="/accommodations">Accommodations</StyledLink>
-            <StyledLink to="/host">Host</StyledLink>
-            <StyledLink to="/contact-us">Contact us</StyledLink>
+            <StyledLink to="/accommodations" onClick={closeMenu}>Accommodations</StyledLink>
+            <StyledLink to="/contact-us" onClick={closeMenu}>Contact us</StyledLink>
           </MenuFlex>
           {auth ? 
             <>
-              <StyledLink to="/admin" className="admin-link"><i className="fas fa-user"></i>Admin</StyledLink>
+              <StyledLink to="/admin" className="admin-link" onClick={closeMenu}><i className="fas fa-user"></i>Admin</StyledLink>
               <button onClick={logout}  className="logout-btn">Logout</button>
             </>
            :
-          <Link to="/login" className="login-btn">
+          <Link to="/login" className="login-btn" onClick={closeMenu}>
             Login
           </Link>
           }
         </Menu>
+        <i onClick={menuToggler} className={menuOpen ? "fas fa-times" : "fas fa-bars"}></i>
       </NavContainer>
     </Header>
   );
@@ -56,6 +64,9 @@ const Nav = () => {
 const Header = styled.header`
   padding: 1rem 0;
   margin-bottom: 4rem;
+  height: 65px;
+  box-shadow: 1px 3px 20px rgba(0,0,0,0.1);
+
 `;
 
 const NavContainer = styled.div`
@@ -68,14 +79,36 @@ const NavContainer = styled.div`
   a {
     color: black;
   }
+
+  .fa-times, .fa-bars{
+    display: none;
+  }
+
+  @media(max-width:680px){
+    .fa-times, .fa-bars{
+      display: block;
+      font-size: 1.8rem;
+      transition: all 0.5s ease;
+      margin-right: 1rem;
+      &:hover{
+        cursor: pointer;
+        color: grey;
+      }
+    }
+  }
 `;
 
 const Logo = styled(Link)`
-  flex: 1;
+  flex: 0.5;
   font-size: 2rem;
   font-weight: 400;
   color: black;
   text-decoration: none;
+
+  @media (max-width: 680px){
+    flex: 1;
+    font-size: 1.2rem;
+  }
 `;
 
 const Menu = styled.nav`
@@ -85,6 +118,7 @@ const Menu = styled.nav`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  transition: all 0.3s ease;
 
   .login-btn, .logout-btn {
     border: none;
@@ -99,6 +133,33 @@ const Menu = styled.nav`
       cursor: pointer;
       background: ${props => props.theme.seaLight};
     }
+
+    @media(max-width: 680px){
+      margin-left: 0;
+      padding: 1rem 2rem;
+      margin-top: 1.3rem;
+    }
+  }
+
+  @media(max-width: 680px){
+    position: absolute;
+    top: 65px;
+    left: 0;
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    background: ${props=>props.theme.clouds};
+
+    &.navOpen{
+      left: 0;
+    }
+
+    &.navClosed{
+      left: -100%;
+    }
   }
 `;
 
@@ -106,6 +167,13 @@ const MenuFlex = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+
+  @media(max-width: 680px){
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 300px;
+  }
 `;
 
 const StyledLink = styled(NavLink)`
@@ -133,6 +201,10 @@ const StyledLink = styled(NavLink)`
     i{
       padding-right: 3px;
     }
+  }
+
+  @media (max-width: 680px){
+    font-size: 1.4rem;
   }
 `;
 

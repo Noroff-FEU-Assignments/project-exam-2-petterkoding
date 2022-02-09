@@ -4,6 +4,7 @@ import AuthContext from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/API";
+import CreateMessage from "../common/CreateMessage";
 import styled from "styled-components";
 
 const LoginForm = () => {
@@ -37,25 +38,23 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {loginError && <p>{loginError}</p>}
+      {loginError && <CreateMessage type="error">{loginError}</CreateMessage>}
       <StyledField disabled={submitting}>
         <InputContainer>
           <Label htmlFor="identifier">Username</Label>
           <Input
             type="text"
             name="identifier"
-            id="identifier"
             placeholder="Username"
-            {...register("identifier", {required: true, minLength: 4})}
+            {...register("identifier", {required: true, minLength: 3})}
           />
-          {errors.username && <p>identifier must be min 4 characters</p>}
+          {errors.username && <p>Username must be atleast 3 characters</p>}
         </InputContainer>
         <InputContainer>
           <Label htmlFor="password">Password</Label>
           <Input
             type="password"
             name="password"
-            id="password"
             placeholder="********"
             {...register("password", {required: true, minLength: 5})}
           />
@@ -142,6 +141,10 @@ const Button = styled.button`
     &:hover{
       cursor: pointer;
     }
+
+    @media (max-width: 680px){
+    padding: 1rem 2rem;
+  }
 `;
 
 export default LoginForm;
