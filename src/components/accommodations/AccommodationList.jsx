@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL, ESTABLISHMENTS, POPULATE} from "../../constants/API";
-import styled from "styled-components";
 import Accommodation from './Accommodation';
+// import FilterType from './FilterType';
+import FilterCopy from './FilterCopy';
+import FilterBeds from './FilterBeds';
+import FilterRating from './FilterRating';
+import styled from "styled-components";
 
 const AccommodationList = () => {
 
     const [establishments, setEstablishments] = useState([]);
     const [filtered, setFiltered] = useState([]);
+    const [activeType, setActiveType] = useState("all");
+    const [howManyBeds, setHowManyBeds] = useState(1);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
 
@@ -33,46 +39,18 @@ const AccommodationList = () => {
 
     if (loading) return <p>....Loading</p>;
 
-    const howManyBeds = (e) => {
-        const selectedValue = e.target.value;
-        const filterEstablishments = establishments.filter(bed => bed.attributes.beds >= selectedValue);
-        setFiltered(filterEstablishments);
-    }
 
     return (
-            <>
-                <FilterSearch>
-                    <Container>
-                        <label htmlFor="sort-select">Sort by</label>
-                        <select name="sort" id="sort-select">
-                            <option value="">Select:</option>
-                            <option value="price">Price</option>
-                            <option value="rating">Rating</option>
-                        </select>
-                    </Container>  
-                    <Container>
-                        <label htmlFor="bed-select">Beds</label>
-                        <select onChange={howManyBeds} name="beds" id="bed-select">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5+</option>
-                        </select>
-                    </Container>  
-                    <Container>
-                        <label htmlFor="type-select">Type</label>
-                        <select name="type" id="type-select">
-                            <option value="apt">Apartment</option>
-                            <option value="house">House</option>
-                            <option value="guesthouse">Guesthouse</option>
-                            <option value="bnb">BnB</option>
-                            <option value="hotel">Hotel</option>
-                        </select>
-                    </Container>  
-                </FilterSearch>
+        <>
+            <FilterOptions>
+                {establishments && <FilterCopy arr={establishments} setState={setFiltered} activeFilter={activeType} setFilterOption={setActiveType} filterType="type" />}
+                {establishments && <FilterBeds arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="beds" />}
+                {establishments && <FilterRating arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="rating" />}
+                <Button onClick={()=> setFiltered(establishments)}><i className="fas fa-redo"></i></Button>
+            </FilterOptions>
+            <Matches>Results: {filtered.length}</Matches>
                 <Flex>
-                {establishments.map(el=> {
+                {filtered.map(el=> {
                     return(
                         <Accommodation key={el.id} attributes={el.attributes} id={el.id} />
                     )
@@ -90,32 +68,32 @@ const Flex = styled.div`
     flex-direction: column;
 `;
 
-const FilterSearch = styled.div`
+const FilterOptions = styled.form`
     display: flex;
-    border: 1px solid ${props => props.theme.lightGrey};
-    border-radius: 15px;
-    height: auto;
     width: 100%;
-    padding: 1rem 3rem;
     justify-content: flex-start;
-    align-items: flex-start;
-    margin: 1rem 2rem 0 0;
-    position: relative;
+    align-items: center;
+`;
+
+const Button = styled.button`
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: none;
+    background: #e4e4e4;
+    color: #3d3d3d;
+    margin-top: 2.1rem;
     
-
-    label{
-        display: block;
-        font-weight: bold;
-        color: #363636;
-    }
-
-    select{
-        width: auto;
-        height: 30px;
-        padding: 5px;
+    &:hover{
+        cursor: pointer;
+        color: black;
+        background: #d4d4d4;
     }
 `;
 
-const Container = styled.div`
-    margin-right: 1.5rem;
+const Matches = styled.span`
+    display: inline-block;
+    color: grey;
+    font-size: 0.8rem;
+    margin: 1rem 0 0.5rem 0;
 `;

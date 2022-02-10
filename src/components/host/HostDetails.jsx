@@ -1,32 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 
 const HostDetails = ({ details }) => {
 
+  const [toggleContact, setToggleContact] = useState(false);
+
   const { name, description, rating, phone, email, picture: { data: { attributes: { url } } } } = details;
 
-    return(
-        < Card >
-          <Flex>
-            <ProfilePic src={url} alt="a man wearing glasses"/>
-            <InnerFlex>
-              <Name>{name}</Name>
-              <Rating>{rating} <i className="fas fa-medal"></i></Rating>
-            </InnerFlex>
-          </Flex>
-            <Details>
-              {description}
-            </Details>
-            <ContactInfo>
-              <InfoContainer>
-                tel: {phone}
-              </InfoContainer>
-              <InfoContainer>
-                mail: {email}
-              </InfoContainer>
-            </ContactInfo>
-            <Button>Contact host</Button>
-        </Card>
+  // const hideContact = () => {
+  //   setToggleContact(false);
+  // }
+
+  return (
+    <>
+      <Button onClick={() => setToggleContact(!toggleContact)}>
+        <i className={ toggleContact ? "fa fa-times" : "far fa-address-book"}></i>
+      </Button>
+      <Card className={toggleContact ? "show" : "hidden"}>
+        <Flex>
+          <ProfilePic src={url} alt="a man wearing glasses"/>
+          <InnerFlex>
+            <Name>{name}</Name>
+            <Rating>{rating} <i className="fas fa-medal"></i></Rating>
+          </InnerFlex>
+        </Flex>
+        <Details>
+          {description}
+        </Details>
+        <ContactInfo>
+           <InfoContainer>
+            tel: {phone}
+          </InfoContainer>
+          <InfoContainer>
+            mail: {email}
+          </InfoContainer>
+        </ContactInfo>
+      </Card>
+    </>
   );
 };
 
@@ -39,13 +49,24 @@ const Card = styled.div`
   padding: 2rem;
   border: 1px solid ${props => props.theme.clouds};
   border-radius: 15px;
+  transition: all 0.4s ease;
 
-  @media (max-width: 1145px) {
-    img{
-      width: 85px;
-      height: 85px;
-      margin-right: 1rem;
-    }
+
+  @media (max-width: 980px) {
+    position: absolute;
+    top: calc(20vh);
+    right: 0;
+    height: 50vh;
+    width: 100%;
+    background: white;
+  }
+
+  &.show{
+    right: 0;
+  }
+
+  &.hidden{
+    right: -100%;
   }
 `;
 
@@ -76,16 +97,6 @@ const Details = styled.p`
 
 `;
 
-const Button = styled.button`
-  border: 1px solid black;
-  color: black;
-  background: transparent;
-  padding: 1rem 2rem;
-  border-radius: 22px;
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: 1rem;
-`;
 
 const ContactInfo = styled.address`
   padding: 1rem 0;
@@ -105,4 +116,46 @@ const ProfilePic = styled.img`
   height: 100px;
   object-fit: cover;
   margin-right: 2rem;
+
+  @media (max-width: 1145px) {
+    width: 75px;
+    height: 75px;
+    margin-right: 0.7rem;
+    
+  }
+
+  @media (max-width: 680px){
+    width: 60px;
+    height: 60px;
+  }
+`;
+
+const Button = styled.button`
+  width: 80px;
+  height: 60px;
+  border-radius: 25px;
+  background: #f8f8f8e2;
+  border: none;
+  display: none;
+  transition: all 0.2s ease;
+
+  i{
+    font-size: 2rem;
+    color: #575757;
+  }
+
+  &:hover{
+    cursor: pointer;
+    background: #eeeeee;
+  }
+  &:hover > i{
+    color: #000000;
+  }
+  @media (max-width: 980px) {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 20vh;
+    z-index: 100000;
+  }
 `;

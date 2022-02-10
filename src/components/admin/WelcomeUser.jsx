@@ -49,5 +49,8 @@ const Button = styled(Link)`
 
 
 const InnerContainer = styled.div`
+    padding: 2rem 1rem;
     margin-top: 3rem;
+    background: #f3f0f0;
+    border-radius: 15px;
 `;

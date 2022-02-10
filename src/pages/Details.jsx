@@ -103,7 +103,6 @@ const Details = () => {
 
 export default Details;
 
-
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -116,7 +115,13 @@ const MainImage = styled.img`
   max-width: 750px;
   height: auto;
   object-fit: cover;
-  margin-right: 3rem;
+  margin-right: 2rem;
+  border-radius: 15px;
+
+  @media (max-width:680px){
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
 `;
 
 
