@@ -7,13 +7,12 @@ const Toggle = ({ children, title, subject, date }) => {
   
   const [toggle, setToggle] = useState(false);
 
-    // title is supposed to be NAME!!!!!!
     return (
-        <Tab onClick={() => setToggle(!toggle)}>
+        <Tab $isOpen={toggle} onClick={() => setToggle(!toggle)}>
             <Flex>
-                <EmailFrom>{title}</EmailFrom>
-                <Title>{subject}</Title>
-                <Date>{formatDate(date)}</Date>
+                <EmailFrom $isOpen={toggle}>{title}</EmailFrom>
+                <Title $isOpen={toggle}>{subject}</Title>
+                <Date $isOpen={toggle}>{formatDate(date)}</Date>
             </Flex>
             {toggle ? children : ""}
         </Tab>
@@ -23,7 +22,7 @@ const Toggle = ({ children, title, subject, date }) => {
 export default Toggle;
 
 const Tab = styled(motion.div)`
-  background:#f0f0f0;
+  background:${props=>props.$isOpen ? "#ffffff" : "#eae9f3"};
   color: #4e4e4e;
   width: 100%;
   height: auto;
@@ -46,9 +45,10 @@ const Flex = styled.div`
 
 const Title = styled.h5`
   font-size: 1rem;
-  color: black;
+  color: ${props=>props.$isOpen ? "black" : "#4d4d4d"};
   white-space: nowrap;
   margin-right: 2rem;
+  transition: all 0.15s ease;
     @media (max-width: 680px){
       margin-right: 0;
       font-size: 0.9rem;

@@ -5,7 +5,7 @@ import { BASE_URL } from "../../constants/API";
 import CreateMessage from "../common/CreateMessage";
 import styled from "styled-components";
 
-const ContactForm = () => {
+const ContactForm = ({endpoint}) => {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -15,13 +15,14 @@ const ContactForm = () => {
 
   const { errors, isValid } = formState;
 
+  const URL = BASE_URL + endpoint;
 
   async function onSubmit(data) {
     setSubmitting(true);
     setError(null);
     console.log(data)
     try {
-      const response = await axios.post(`${BASE_URL}/api/messsages`, {
+      const response = await axios.post( URL, {
         data: data,
       });
       console.log(response);
@@ -37,14 +38,14 @@ const ContactForm = () => {
         {submitting && <CreateMessage type="success">Message sent!</CreateMessage>}
         <StyledField>
           <InputContainer>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Title</Label>
             <Input
               type="text"
               name="title"
-              placeholder="Your name"
+              placeholder="Title"
               {...register("title", {required: true, minLength: 2})}
             />
-            {errors.title && <p>Name is too short</p>}
+            {errors.title && <p>Title is too short</p>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="subject">Subject</Label>
@@ -93,7 +94,7 @@ const Form = styled.form`
   max-width: 440px;
   box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
   position: relative;
-  margin-top: 2rem;
+  margin: 2rem 0 5rem 0;
 
   &:before{
     position: absolute;
@@ -108,6 +109,10 @@ const Form = styled.form`
     z-index: -1;
     padding: 7px;
 
+  }
+
+  @media (max-width: 680px){
+    max-width: 100%;
   }
 `;
 

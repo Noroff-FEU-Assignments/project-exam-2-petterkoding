@@ -7,6 +7,7 @@ import ReviewList from "../components/accommodations/details/ReviewList";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
 import styled from "styled-components";
+import ContactForm from "../components/contact/ContactForm";
 
 const Details = () => {
 
@@ -67,7 +68,8 @@ const Details = () => {
     <p>Error occured...</p>
   }
   
-  if (loading) return <p>Loading...</p> 
+  if (loading) return <p>Loading...</p>
+
  
   return (
     <>
@@ -89,6 +91,10 @@ const Details = () => {
       <Facilities list={facilities} beds={details.beds} />
       
       <ReviewList reviews={reviews} />
+
+      <ContactForm endpoint="/api/enquiries" />
+      
+      
       <iframe
         title="Map of Bergen"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15769.802395602157!2d5.297999548075794!3d60.39195658115635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46390d4966767d77%3A0x9e42a03eb4de0a08!2sBergen!5e0!3m2!1sno!2sno!4v1643273408372!5m2!1sno!2sno"
@@ -156,4 +162,28 @@ const Address = styled.address`
   margin-bottom: 2rem;
 `;
 
+const StyledForm = styled.form`
+  padding: 2rem 3rem;
+  background: #ffffff;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
+  position: relative;
+  margin: 2rem 0;
 
+  &:before{
+    position: absolute;
+    content:"";
+    left: -7px;
+    top: -7px;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: rgb(19,100,222);
+    background: linear-gradient(49deg, rgba(19,100,222,1) 4%, rgba(83,48,93,1) 95%);  
+    z-index: -1;
+    padding: 7px;
+
+  }
+`;

@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <Container>
       <Heading size="1">Contact us</Heading>
-      <ContactForm/>
+      <ContactForm endpoint="/api/messages"/>
     </Container>
   )
 }
