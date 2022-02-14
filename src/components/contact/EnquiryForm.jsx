@@ -3,6 +3,8 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { BASE_URL } from "../../constants/API";
 import CreateMessage from "../common/CreateMessage";
+import Heading from "../common/Heading";
+import Paragraph from "../common/Paragraph";
 import styled from "styled-components";
 
 const ContactForm = () => {
@@ -20,7 +22,7 @@ const ContactForm = () => {
     setError(null);
     console.log(data)
     try {
-      const response = await axios.post( `${BASE_URL}/api/messages`, {
+      const response = await axios.post( `${BASE_URL}/api/enquiries`, {
         data: data,
       });
       console.log(response);
@@ -32,8 +34,11 @@ const ContactForm = () => {
   }
 
   return (
+    <>
+      <Heading size="3">Any questions about this establishment?</Heading>
+      <Paragraph>Don't hesitate to contact the host!</Paragraph>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {submitting && <CreateMessage type="success">Message was sent!</CreateMessage>}
+        {submitting && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
         <StyledField>
           <InputContainer>
             <Label htmlFor="name">Title</Label>
@@ -72,15 +77,16 @@ const ContactForm = () => {
             <Label htmlFor="message">Message</Label>
             <TextArea
               type="textarea"
-              name="text"
+              name="message"
               placeholder="Start writing here"
-              {...register("text", {required:true, minLength: 10})}
+              {...register("message", {required:true, minLength: 10})}
             />
-            {errors.text && <p>Message must be atleast 10 characters</p>}
+            {errors.message && <p>Message must be atleast 10 characters</p>}
           </InputContainer>
           <Button type="submit" disabled={!isValid}>Send</Button>
         </StyledField>
-        </Form>
+      </Form>
+    </>
   );
 };
 
@@ -179,6 +185,13 @@ const Button = styled.button`
   font-size: 1.3rem;
   padding: 0.5rem 1rem;
   border-radius: 15px;
+  background: ${props => props.theme.seaBlack};
+  color: white;
+
+  &:disabled{
+    background: #c8c8c8;
+    color: #ffffff;
+  }
 
   @media (max-width: 680px){
     padding: 1rem 2rem;

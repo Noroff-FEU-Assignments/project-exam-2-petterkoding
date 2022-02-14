@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-// import axios from "axios";
-// import useAxios from "../../hooks/useAxios";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
@@ -15,10 +15,13 @@ const Create = () => {
     const [auth, setAuth] = useContext(AuthContext);
     const [facilities, setFacilities] = useState(facility);
     const [file, setFile] = useState(false);
+    const [id, setId] = useState(null);
 
     const handleInputChange = (event) => {
         setFile(event.target.files[0])
     }
+
+    const http = useAxios();
 
     const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
 
@@ -26,28 +29,34 @@ const Create = () => {
 
     const corsURL = "https://noroffcors.herokuapp.com/";
 
-    const corsFix = corsURL + BASE_URL;
+    // const corsFix = corsURL + BASE_URL;
+
+ 
   
 
     async function onSubmit(data, e) {
-        console.log("data",data)
+        console.log(data)
         e.preventDefault();
         setSubmitting(true);
         setPublishError(null);
-        let formData = new FormData();
-        formData.append("files.image",  file);
-        formData.append("data", JSON.stringify(data));
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+        formData.append('refId', 115);
+        formData.append('files.image', file);
+        formData.append('ref', 'establishment');
+        formData.append("api::establishment:establishment", 'img');
         try {
             const response = await fetch(`${BASE_URL}/api/establishments`, {
                 method: "POST",
-                body: formData,
+                data: formData,
                 headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${auth.jwt}`,
+                    "Content-type": "multipart/form-data",
+                    Authorization: `Bearer ${auth.jwt}`,
                 },
+
+                
             });
-            const json = await response.json();
-            console.log(response, json);
+            console.log(response);
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
@@ -141,8 +150,8 @@ const Create = () => {
                                     </CheckboxContainer>
                                 );
                             })}
-                        </Grid>
-                    </InputField> */}
+                        </Grid> */}
+                    {/* </InputField> */}
 
                     <InputField>
                         <Label htmlFor="img">Image</Label>
@@ -152,7 +161,7 @@ const Create = () => {
                             name="img"
                             {...register("img", {required: true})}/>
                         {errors.img && <p>Image is required</p>}
-                    </InputField>
+                    </InputField> 
                  
                     <Button type="submit" disabled={!isValid}>
                         {submitting ? "Publishing..." : "Publish"}

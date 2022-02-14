@@ -7,7 +7,7 @@ import ReviewList from "../components/accommodations/details/ReviewList";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
 import styled from "styled-components";
-import ContactForm from "../components/contact/ContactForm";
+import EnquiryForm from "../components/contact/EnquiryForm";
 
 const Details = () => {
 
@@ -92,7 +92,7 @@ const Details = () => {
       
       <ReviewList reviews={reviews} />
 
-      <ContactForm endpoint="/api/enquiries" />
+      <EnquiryForm/>
       
       
       <iframe
@@ -162,28 +162,4 @@ const Address = styled.address`
   margin-bottom: 2rem;
 `;
 
-const StyledForm = styled.form`
-  padding: 2rem 3rem;
-  background: #ffffff;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 440px;
-  box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
-  position: relative;
-  margin: 2rem 0;
 
-  &:before{
-    position: absolute;
-    content:"";
-    left: -7px;
-    top: -7px;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: rgb(19,100,222);
-    background: linear-gradient(49deg, rgba(19,100,222,1) 4%, rgba(83,48,93,1) 95%);  
-    z-index: -1;
-    padding: 7px;
-
-  }
-`;

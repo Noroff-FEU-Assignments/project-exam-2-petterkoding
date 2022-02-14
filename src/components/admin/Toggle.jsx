@@ -3,14 +3,14 @@ import formatDate from '../../js/DateFormat';
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-const Toggle = ({ children, title, subject, date }) => {
+const Toggle = ({ children, subject, date, email }) => {
   
   const [toggle, setToggle] = useState(false);
 
     return (
         <Tab $isOpen={toggle} onClick={() => setToggle(!toggle)}>
             <Flex>
-                <EmailFrom $isOpen={toggle}>{title}</EmailFrom>
+                <EmailFrom $isOpen={toggle}>{email}</EmailFrom>
                 <Title $isOpen={toggle}>{subject}</Title>
                 <Date $isOpen={toggle}>{formatDate(date)}</Date>
             </Flex>
