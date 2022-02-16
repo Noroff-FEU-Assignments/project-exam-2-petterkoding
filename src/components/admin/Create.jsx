@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-// import axios from "axios";
-// import useAxios from "../../hooks/useAxios";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
@@ -27,27 +27,24 @@ const Create = () => {
     const corsURL = "https://noroffcors.herokuapp.com/";
 
     const corsFix = corsURL + BASE_URL;
+
+    const http = useAxios();
   
 
     async function onSubmit(data, e) {
-        console.log("data",data)
         e.preventDefault();
         setSubmitting(true);
         setPublishError(null);
-        let formData = new FormData();
-        formData.append("files.image",  file);
-        formData.append("data", JSON.stringify(data));
+        console.log("data",data)
         try {
-            const response = await fetch(`${BASE_URL}/api/establishments`, {
-                method: "POST",
-                body: formData,
+            const response = await http.post(`/api/establishments`, {
+                data: data,
                 headers: {
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${auth.jwt}`,
                 },
             });
-            const json = await response.json();
-            console.log(response, json);
+            console.log(response);
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
@@ -71,7 +68,7 @@ const Create = () => {
                             {...register("title", {required: true, minLength: 10})}/>
                         {errors.title && <p>Title is too short</p>}
                     </InputField>
-                    {/* <InputField>
+                    <InputField>
                         <Label htmlFor="address">Address:</Label>
                         <Input
                             type="text"
@@ -142,9 +139,9 @@ const Create = () => {
                                 );
                             })}
                         </Grid>
-                    </InputField> */}
+                    </InputField>
 
-                    <InputField>
+                    {/* <InputField>
                         <Label htmlFor="img">Image</Label>
                         <Input
                             onChange={handleInputChange}
@@ -152,7 +149,7 @@ const Create = () => {
                             name="img"
                             {...register("img", {required: true})}/>
                         {errors.img && <p>Image is required</p>}
-                    </InputField>
+                    </InputField> */}
                  
                     <Button type="submit" disabled={!isValid}>
                         {submitting ? "Publishing..." : "Publish"}

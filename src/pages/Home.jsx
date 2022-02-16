@@ -2,6 +2,8 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import HeroSection from "../components/home/HeroSection";
 import { BASE_URL, ESTABLISHMENTS } from "../constants/API"
+// import LearnHosting from "../components/host/LearnHosting";
+import Motion from "../components/motion/Motion";
 
 const Home = () => {
 
@@ -27,11 +29,14 @@ const Home = () => {
   }, [])
 
   return (
-    <>
+    <Motion>
       <HeroSection establishments={establishments} />
-    </>
+      {/* <LearnHosting/> */}
+    </Motion>
   );
 };
 
 
 export default Home;
+
+

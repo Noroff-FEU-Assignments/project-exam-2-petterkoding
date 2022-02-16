@@ -3,6 +3,7 @@ import {useNavigate } from "react-router-dom";
 import TabLayout from "../components/admin/TabLayout";
 import WelcomeUser from "../components/admin/WelcomeUser";
 import AuthContext from "../context/AuthContext";
+import Motion from "../components/motion/Motion";
 
 const AdminPage = () => {
 
@@ -17,14 +18,14 @@ const AdminPage = () => {
   const { user: { username } } = auth;
 
   return(
-    <>
+    <Motion>
       {auth &&
       <>
         <WelcomeUser username={username} />
         <TabLayout/>
       </>
       }
-    </>
+    </Motion>
   );
 };
 

@@ -39,6 +39,7 @@ const Button = styled(Link)`
     padding: 1rem 2rem;
     background: ${props => props.theme.seaLight};
     color: white;
+    border-radius: 25px;
     transition: all .2s ease;
     
     &:hover{

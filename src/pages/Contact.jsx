@@ -2,13 +2,16 @@ import React from 'react'
 import styled from "styled-components";
 import Heading from '../components/common/Heading';
 import ContactForm from '../components/contact/ContactForm';
+import Motion from '../components/motion/Motion';
 
 const Contact = () => {
   return (
-    <Container>
-      <Heading size="1">Contact us</Heading>
-      <ContactForm />
-    </Container>
+    <Motion>
+      <Container>
+        <Heading size="1">Contact us</Heading>
+        <ContactForm />
+      </Container>
+    </Motion>
   )
 }
 

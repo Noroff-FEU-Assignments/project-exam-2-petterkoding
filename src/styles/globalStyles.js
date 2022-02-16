@@ -9,21 +9,27 @@ const GlobalStyle = createGlobalStyle`
 
     html, body{
         height: 100%;
+        
     }
 
     body{ 
         font-family: 'Outfit', sans-serif;
-        background: #fff;
+        background: #f3f7f8;
+      
+        
     }
 
     #root{
         display: flex;
         flex-direction: column;
         height: 100%;
+        
+        
     }
 
     .wrapper{
         flex: 1 0 auto;
+        
     }
 
     footer{

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import Image from "./Image";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 
@@ -19,7 +21,18 @@ const HeroSection = ({ establishments }) => {
   return (
     <Wrapper>
       <Card>
-          <Heading>Visit Bergen</Heading>
+      <Hidden>
+        <Heading
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2 }}>
+          Visit Bergen
+        </Heading>
+        </Hidden>
+        <MotionContainer
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ ease: [0,.13,.43,.98], duration: 2, delay: 0.7 }}>
           <Paragraph>
             Holidaze helps you find enjoyable accommodation in Bergen
           </Paragraph>
@@ -33,9 +46,7 @@ const HeroSection = ({ establishments }) => {
               onChange={searchHandler}
               placeholder="Apartments, guesthouses, hotels..."
             />
-            <Button>
-              <i className="fas fa-search"></i>
-            </Button>
+       
           <SuggestList>
             {suggestions.map(title => {
               return (
@@ -49,7 +60,9 @@ const HeroSection = ({ establishments }) => {
             })}
           </SuggestList>
           </InputContainer>
+          </MotionContainer>
       </Card>
+      {/* <Image/> */}
     </Wrapper>
   );
 };
@@ -57,39 +70,56 @@ const HeroSection = ({ establishments }) => {
 export default HeroSection;
 
 const Wrapper = styled.div`
-  width: 100%;
+  /* width: 400px; */
   position: relative;
+  min-height: 90vh;
 `;
-
 
 const Card = styled.div`
-  margin-top: 10rem;
+  /* margin-top: 4rem; */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  max-width: 500px;
+  border-radius: 15px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  /* background: #ffffff7d;
+  border: 1px solid white; */
+  @media (max-width:680px){
+    width: 100%;
+  }
 `;
 
-const Heading = styled.h1`
-  font-size: 3rem;
-  color: black;
+const Hidden = styled.div`
+  overflow: hidden;
+`;
+
+const MotionContainer = styled(motion.div)`
+`;
+
+const Heading = styled(motion.h1)`
+  font-size: 60px;
+  color: #111111;
 `;
 
 const Paragraph = styled.p`
   font-size: 1.2rem;
   margin: 1rem 0 2rem 0;
-  color: black;
+  color: #1a1a1a;
 `;
 
 const Label = styled.label`
   display: block;
-  font-size: 1.2rem;
-  color: white;
-  font-weight: 600;
+  font-size: 1.1rem;
+  color: #181818;
+  font-weight: 500;
 `;
 
 const InputContainer = styled.div`
   position: relative;
-  width: 400px;
+  width: 350px;
   height: 100%;
 `;
 
@@ -97,30 +127,15 @@ const Input = styled.input`
   display: inline;
   border: none;
   outline: none;
-  height: 40px;
-  width: 80%;
+  height: 50px;
+  width: 100%;
   font-size: 1.2rem;
   padding: 7px;
-  border-bottom: 2px solid ${props => props.theme.orangeWood};
+  border-radius: 10px;
   
   &::placeholder {
     font-size: 0.9rem;
     color: ${(props) => props.theme.lightGrey};
-  }
-`;
-
-const Button = styled.button`
-  display: inline;
-  border: none;
-  font-size: 1.2rem;
-  height: 40px;
-  width: 40px;
-  border-radius: 100%;
-  margin-left: 1rem;
-  background: ${(props) => props.theme.seaLight};
-  color: white;
-  &:hover {
-    cursor: pointer;
   }
 `;
 
@@ -130,7 +145,6 @@ const SuggestList = styled.ul`
   height: auto;
   position: absolute;
   left: 0;
-  border: 1px solid #b1b1b1;
 `;
 const Suggestions = styled.li`
   height: 40px;

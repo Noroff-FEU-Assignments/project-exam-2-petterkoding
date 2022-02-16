@@ -32,10 +32,11 @@ const ContactForm = () => {
   }
 
   return (
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        {submitting && <CreateMessage type="success">Message was sent!</CreateMessage>}
-        <StyledField>
-          <InputContainer>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      {submitting && <CreateMessage type="success">Message was sent!</CreateMessage>}
+      <StyledField>
+        
+        <InputContainer>
             <Label htmlFor="name">Title</Label>
             <Input
               type="text"
@@ -44,8 +45,9 @@ const ContactForm = () => {
               {...register("title", {required: true, minLength: 2})}
             />
             {errors.title && <p>Title is too short</p>}
-          </InputContainer>
-          <InputContainer>
+        </InputContainer>
+        
+        <InputContainer>
             <Label htmlFor="subject">Subject</Label>
             <Input
               type="text"
@@ -54,8 +56,9 @@ const ContactForm = () => {
               {...register("subject", {required: true, minLength: 5})}
             />
             {errors.subject && <p>Subject is required</p>}
-          </InputContainer>
-          <InputContainer>
+        </InputContainer>
+        
+        <InputContainer>
             <Label htmlFor="email">Email</Label>
             <Input
               type="email"
@@ -67,8 +70,9 @@ const ContactForm = () => {
               }})}
             />
             {errors.email_from && <p>Must be a valid email</p>}
-          </InputContainer>
-          <InputContainer>
+        </InputContainer>
+        
+        <InputContainer>
             <Label htmlFor="message">Message</Label>
             <TextArea
               type="textarea"
@@ -77,10 +81,12 @@ const ContactForm = () => {
               {...register("text", {required:true, minLength: 10})}
             />
             {errors.text && <p>Message must be atleast 10 characters</p>}
-          </InputContainer>
-          <Button type="submit" disabled={!isValid}>Send</Button>
-        </StyledField>
-        </Form>
+        </InputContainer>
+        
+        <Button type="submit" disabled={!isValid}>Send</Button>
+        
+      </StyledField>
+    </Form>
   );
 };
 
@@ -122,7 +128,7 @@ const InputContainer = styled.div`
   margin: 0.5rem 0 2rem 0;
   position: relative;
   width: 100%;
-  `;
+`;
 
 const Label = styled.label`
   display: block;

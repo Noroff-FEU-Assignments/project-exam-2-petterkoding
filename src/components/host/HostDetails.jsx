@@ -5,7 +5,7 @@ const HostDetails = ({ details }) => {
 
   const [toggleContact, setToggleContact] = useState(false);
 
-  const { name, description, rating, phone, email, picture: { data: { attributes: { url } } } } = details;
+  const {  name, description, rating, phone, email, picture: { data: { attributes: { url } } } } = details;
 
   // const hideContact = () => {
   //   setToggleContact(false);

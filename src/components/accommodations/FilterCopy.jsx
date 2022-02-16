@@ -19,7 +19,7 @@ function Filter({ arr, setState, activeFilter, setFilterOption, filterType }) {
         const filtered = arr.filter((establishment) => establishment.attributes.type === activeFilter);
         setState(filtered);
         
-    }, [activeFilter, arr, setState, filterBy.operator]);
+    }, [activeFilter, arr, setState]);
 
     
     return (

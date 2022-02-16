@@ -6,15 +6,25 @@ import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
-import styled from "styled-components";
 import EnquiryForm from "../components/contact/EnquiryForm";
+import Motion from "../components/motion/Motion";
+import styled from "styled-components";
 
 const Details = () => {
 
   const [details, setDetails] = useState([]);
   const [facilities, setFacilities] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [host, setHost] = useState({});
+  const [host, setHost] = useState({
+    data: {
+      name: "sara",
+      description: "sss",
+      email: "sss",
+      phone: "sss",
+      rating: "sss",
+      picture: "sss",
+    }
+  });
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
@@ -51,7 +61,7 @@ const Details = () => {
         setDetails(json);
         setFacilities(json.facilities.data);
         setReviews(json.reviews.data);
-        setHost(json.host.data.attributes);
+        setHost(json.host?.data?.attributes);
         console.log("details", json)
     
       } catch (error) {
@@ -72,10 +82,10 @@ const Details = () => {
 
  
   return (
-    <>
+    <Motion>
       <FlexContainer>
         <MainImage src={details.img.data.attributes.url} alt={details.img.data.attributes.alternativeText}/>
-        <HostDetails details={host} />
+        {host && <HostDetails details={host} />}
       </FlexContainer>
 
       <Heading size="1">
@@ -103,7 +113,7 @@ const Details = () => {
         allowFullScreen=""
         loading="lazy">
       </iframe>
-    </>
+    </Motion>
   );
 };
 
