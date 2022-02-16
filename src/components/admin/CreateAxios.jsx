@@ -5,8 +5,8 @@ import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
 import Heading from '../common/Heading';
-import styled from "styled-components";
 import facility from "./facility.json"
+import styled from "styled-components";
 
 const Create = () => {
 
@@ -14,7 +14,6 @@ const Create = () => {
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
     const [facilities, setFacilities] = useState(facility);
-    const [selected, setSelected] = useState(false);
 
     const http = useAxios();
 
@@ -144,7 +143,7 @@ const Create = () => {
                         <CheckboxFlex>
                             {facilities.map((el, i) => {
                                 return (
-                                    <CheckboxContainer key={el.id} $isSelected={selected} onClick={() => setSelected(!selected)}>
+                                    <CheckboxContainer key={el.id}>
                                         <Label htmlFor={el.name}>{el.name}</Label>
                                         <input
                                             type="checkbox"
@@ -180,33 +179,32 @@ const Create = () => {
 export default Create;
 
 const Form = styled.form`
-  padding: 2rem 3rem;
-  background: #ffffff;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 600px;
-  box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
-  position: relative;
-  margin: 2rem 0 5rem 0;
-
-  &:before{
-    position: absolute;
-    content:"";
-    left: -7px;
-    top: -7px;
+    padding: 2rem 3rem;
+    background: #ffffff;
+    border-radius: 15px;
     width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: rgb(19,100,222);
-    background: linear-gradient(49deg, rgba(19,100,222,1) 4%, rgba(83,48,93,1) 95%);  
-    z-index: -1;
-    padding: 7px;
+    max-width: 600px;
+    box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
+    position: relative;
+    margin: 2rem 0 5rem 0;
 
-  }
+    &:before{
+        position: absolute;
+        content:"";
+        left: -7px;
+        top: -7px;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background: rgb(19,100,222);
+        background: linear-gradient(49deg, rgba(19,100,222,1) 4%, rgba(83,48,93,1) 95%);  
+        z-index: -1;
+        padding: 7px;
+    }
 
-  @media (max-width: 680px){
-    max-width: 100%;
-  }
+    @media (max-width: 680px){
+        max-width: 100%;
+    }
 `;
 
 const InputField = styled.div`
@@ -237,7 +235,7 @@ const CheckboxContainer = styled.div`
     text-align: center;
     padding: 5px 10px;
     background: #e4e4e4;
-    background:${props=>props.$isSelected ? "#345ee6" : "#e4e4e4"};
+    background:#eeeeee;
     border-radius: 10px;
     
     label{
@@ -338,8 +336,8 @@ const Button = styled.button`
   margin-top: 1rem;
 
   &:disabled{
-    background: #b4b4b4;
-    color: #777777;
+    background: ${props=>props.theme.disabledBg};
+    color: ${props=>props.theme.disabledColor};
     &:hover{
         cursor: default;
     }

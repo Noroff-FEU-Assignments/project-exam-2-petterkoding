@@ -5,12 +5,14 @@ import { BASE_URL } from "../../constants/API";
 import CreateMessage from "../common/CreateMessage";
 import Heading from "../common/Heading";
 import Paragraph from "../common/Paragraph";
+import FormMessage from "../common/FormMessage";
 import styled from "styled-components";
 
 const ContactForm = () => {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [sent, setSent] = useState(false);
 
 
   const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
@@ -29,6 +31,8 @@ const ContactForm = () => {
     } catch (error) {
       setError(error.toString());
     } finally {
+      setSubmitting(false);
+      setSent(true);
       reset();
     }
   }
@@ -38,18 +42,9 @@ const ContactForm = () => {
       <Heading size="3">Any questions about this establishment?</Heading>
       <Paragraph>Don't hesitate to contact the host!</Paragraph>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {submitting && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
-        <StyledField>
-          <InputContainer>
-            <Label htmlFor="name">Title</Label>
-            <Input
-              type="text"
-              name="title"
-              placeholder="Title"
-              {...register("title", {required: true, minLength: 2})}
-            />
-            {errors.title && <p>Title is too short</p>}
-          </InputContainer>
+      {error && <CreateMessage type="error">{error}</CreateMessage>}
+      {sent && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
+        <StyledField disabled={submitting}>
           <InputContainer>
             <Label htmlFor="subject">Subject</Label>
             <Input
@@ -58,7 +53,7 @@ const ContactForm = () => {
               placeholder="Subject"
               {...register("subject", {required: true, minLength: 5})}
             />
-            {errors.subject && <p>Subject is required</p>}
+            {errors.subject && <FormMessage>Subject is required</FormMessage>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="email">Email</Label>
@@ -71,7 +66,7 @@ const ContactForm = () => {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               }})}
             />
-            {errors.email_from && <p>Must be a valid email</p>}
+            {errors.email_from && <FormMessage>Must be a valid email</FormMessage>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="message">Message</Label>
@@ -81,7 +76,7 @@ const ContactForm = () => {
               placeholder="Start writing here"
               {...register("message", {required:true, minLength: 10})}
             />
-            {errors.message && <p>Message must be atleast 10 characters</p>}
+            {errors.message && <FormMessage>Message must be atleast 10 characters</FormMessage>}
           </InputContainer>
           <Button type="submit" disabled={!isValid}>Send</Button>
         </StyledField>
@@ -183,14 +178,23 @@ const TextArea = styled.textarea`
 const Button = styled.button`
   border: none;
   font-size: 1.3rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   border-radius: 15px;
   background: ${props => props.theme.seaBlack};
   color: white;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 
   &:disabled{
-    background: #c8c8c8;
-    color: #ffffff;
+    background: ${props=>props.theme.disabledBg};
+    color: ${props=>props.theme.disabledColor};
+    &:hover{
+        cursor: default;
+    }
+  }
+
+  &:hover{
+      cursor: pointer;
   }
 
   @media (max-width: 680px){

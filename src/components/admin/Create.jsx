@@ -1,134 +1,160 @@
-import React, { useState, useContext } from 'react';
-import axios from "axios";
-import useAxios from "../../hooks/useAxios";
+import React, { useState, useContext} from 'react';
+// import axios from "axios";
+// import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
 import Heading from '../common/Heading';
-import styled from "styled-components";
 import facility from "./facility.json"
+import FormMessage from '../common/FormMessage';
+import CreateMessage from '../common/CreateMessage';
+import styled from "styled-components";
 
 const Create = () => {
-
+    const [published, setPublished] = useState(false);
     const [publishError, setPublishError] = useState(null);
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
     const [facilities, setFacilities] = useState(facility);
-    const [file, setFile] = useState(false);
+    const [id, setId] = useState("");
 
-    const handleInputChange = (event) => {
-        setFile(event.target.files[0])
-    }
+    // const http = useAxios();
 
-    const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
+    document.title = "Holidaze | Create new establishment";
+
+    const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
 
     const { errors, isValid } = formState;
 
-    const corsURL = "https://noroffcors.herokuapp.com/";
+    // const corsURL = "https://noroffcors.herokuapp.com/";
 
-    const corsFix = corsURL + BASE_URL;
+    const url = `${BASE_URL}/api/establishments`;
 
-    const http = useAxios();
-  
-
-    async function onSubmit(data, e) {
-        e.preventDefault();
+    const formData = new FormData(); 
+    
+    async function onSubmit({title, address,description, short_description, type, rating, beds, facilities, img}) {
         setSubmitting(true);
         setPublishError(null);
-        console.log("data",data)
-        try {
-            const response = await http.post(`/api/establishments`, {
-                data: data,
-                headers: {
-                "Content-Type": "application/json",
+        const data = JSON.stringify({ title, address, description, short_description, type, rating, beds, facilities})        
+        formData.append("data", data);
+        formData.append('files.img', img[0]);
+        const options = {
+            method: "POST",
+            body: formData,
+            headers: {
                 Authorization: `Bearer ${auth.jwt}`,
-                },
-            });
-            console.log(response);
+            }
+        }
+        try {
+            const response = await fetch(url, options);
+            const json = await response.json();
+            console.log(json);
+            setId(json.data.id);
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
+            setPublished(false);
         } finally {
             setSubmitting(false)
+            setPublished(true);
+            reset();
         }
     }
+
     
     return (
         <>
             <Heading size="1">Start creating</Heading>
-            {publishError && <p>{publishError}</p>}
+            {publishError && <CreateMessage type="error">{publishError}</CreateMessage>}
+            {published && <CreateMessage type="success">New establishment created! <a href={`/accommodations/${id}`}>Take a look <i className="fas fa-link"></i></a></CreateMessage>}
             <Form onSubmit={handleSubmit(onSubmit)}>
-                <Fieldset>
+                <Fieldset disabled={submitting}>
                     <InputField>
-                        <Label htmlFor="title">Title:</Label>
+                    <Label htmlFor="title">Title:</Label>
                         <Input
                             type="text"
                             name="title"
-                            id="title"
-                            {...register("title", {required: true, minLength: 10})}/>
-                        {errors.title && <p>Title is too short</p>}
+                            placeholder="Title"
+                            {...register("title", {required: true, minLength: 8})}/>
+                            {errors.title && <FormMessage>Title is too short</FormMessage>}
                     </InputField>
+                    
                     <InputField>
                         <Label htmlFor="address">Address:</Label>
                         <Input
                             type="text"
                             name="address"
-                            id="address"
-                            {...register("address", {required: true, minLength: 15})}/>
-                        {errors.address && <p>Address is required</p>}
+                            placeholder="Address"
+                            {...register("address", {required: true, minLength: 13})}/>
+                            {errors.address && <FormMessage>Address is required</FormMessage>}
                     </InputField>
+                    
                     <InputField>
                         <Label htmlFor="description">Description:</Label>
-                        <Textarea
+                        <HelperText>(Describe the accommodation)</HelperText>
+                        <TextArea
                             type="text"
                             name="description"
-                            id="description"
-                            {...register("description", {required: true, minLength: 20})}/>
-                        {errors.description && <p>Description is too short</p>}
+                            placeholder="start writing..."
+                            {...register("description", {required: true, minLength: 15})}/>
+                        {errors.description && <FormMessage>Description is too short</FormMessage>}
                     </InputField>
+
                     <InputField>
-                        <Label htmlFor="short_description">Short Description:</Label>
-                        <Textarea
+                        <Label htmlFor="short_description">Short Description:</Label><HelperText>(This will be the first thing they read, make it enticing!)</HelperText>
+                        <SmallTextArea
                             type="text"
                             name="short_description"
+                            placeholder="start writing..."
                             {...register("short_description", {required: true, minLength: 10})}/>
-                        {errors.short_description && <p>Description is too short</p>}
+                        {errors.short_description && <FormMessage>Description is too short</FormMessage>}
                     </InputField>
+
                     <Flex>
-                        <InputField>
+                        <InputField style={{flex:2}}>
                             <Label htmlFor="title">Type:</Label>
-                            <SmallInput
+                            <HelperText>(Please choose one)</HelperText>
+                            <SmallSelect
                                 type="text"
                                 name="type"
-                                id="type"
-                                {...register("type", {required: true, minLength: 1})}/>
-                            {errors.title && <p>Type is required</p>}
+                                {...register("type", { required: true, minLength: 1 })}>
+                                <option value="">Please select</option>
+                                <option value="apt">Apartment</option>
+                                <option value="bnb">BnB</option>
+                                <option value="hotel">Hotel</option>
+                                <option value="guesthouse">Guesthouse</option>
+                                <option value="house">House</option>
+                            </SmallSelect>
+                            {errors.type && <FormMessage>Type is required</FormMessage>}
                         </InputField>
-                        <InputField>
+                        <InputField style={{flex:1}}>
                             <Label htmlFor="rating">Rating:</Label>
-                            <SmallInput
+                            <HelperText>(R = 1-10)</HelperText>
+                            <Input
                                 type="number"
                                 name="rating"
-                                id="rating"
-                                {...register("rating", { required: false, min: 1, max: 10 })} />
-                            {errors.rating && <p>Rating must be a value between 1-10</p>}
+                                placeholder="1-10"
+                                {...register("rating", { required: true, min: 1, max: 10 })} />
+                            {errors.rating && <FormMessage>Must be a number 1-10</FormMessage>}
                         </InputField>
-                        <InputField>
+                        <InputField style={{flex:1}}>
                             <Label htmlFor="beds">Beds:</Label>
-                            <SmallInput
+                            <HelperText>(Minimum 1)</HelperText>
+                            <Input
                                 type="number"
                                 name="beds"
-                                id="beds"
-                                {...register("beds", { required: false, min: 1})} />
-                            {errors.beds && <p>Establishment must have atleast 1 bed</p>}
+                                placeholder="Beds"
+                                {...register("beds", { required: true, min: 1})} />
+                            {errors.beds && <FormMessage>Required</FormMessage>}
                         </InputField>
                     </Flex>
+
                     <InputField>
-                        <Heading size="4">Add Facilities</Heading>
-                        <Grid>
+                        <Label htmlFor="facilities">Add Facilities</Label>
+                        <CheckboxFlex>
                             {facilities.map((el) => {
                                 return (
-                                    <CheckboxContainer key={el.id}>
+                                    <CheckboxContainer key={el.id} className="checkbox">
                                         <Label htmlFor={el.name}>{el.name}</Label>
                                         <input
                                             type="checkbox"
@@ -137,23 +163,25 @@ const Create = () => {
                                             {...register("facilities", {required: true})}/>
                                     </CheckboxContainer>
                                 );
+                               
                             })}
-                        </Grid>
+                        </CheckboxFlex>
                     </InputField>
 
-                    {/* <InputField>
+                    <InputField >
                         <Label htmlFor="img">Image</Label>
                         <Input
-                            onChange={handleInputChange}
                             type="file"
                             name="img"
+                            accept="images/jpg, images/png"
                             {...register("img", {required: true})}/>
                         {errors.img && <p>Image is required</p>}
-                    </InputField> */}
-                 
+                    </InputField>
+
                     <Button type="submit" disabled={!isValid}>
                         {submitting ? "Publishing..." : "Publish"}
                     </Button>
+
                 </Fieldset>
             </Form>
         </>
@@ -163,9 +191,42 @@ const Create = () => {
 export default Create;
 
 const Form = styled.form`
+    padding: 2rem 3rem;
+    background: #ffffff;
+    border-radius: 15px;
     width: 100%;
-    max-width: 700px;
-    margin-top: 2rem;
+    max-width: 600px;
+    box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
+    position: relative;
+    margin: 2rem 0 5rem 0;
+
+    &:before{
+        position: absolute;
+        content:"";
+        left: -7px;
+        top: -7px;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background: rgb(19,100,222);
+        background: linear-gradient(49deg, rgba(19,100,222,1) 4%, rgba(83,48,93,1) 95%);  
+        z-index: -1;
+        padding: 7px;
+    }
+
+    @media (max-width: 680px){
+        max-width: 100%;
+    }
+`;
+
+const InputField = styled.div`
+    margin: 0.8rem 0 1.3rem 0;
+    position: relative;
+    width: 100%;
+`;
+
+const Fieldset = styled.fieldset`
+    border: none;
 `;
 
 const Flex = styled.div`
@@ -174,69 +235,138 @@ const Flex = styled.div`
     gap: 2rem;
 `;
 
-const Grid = styled.div`
+const CheckboxFlex = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin: 1rem 0 2 0;
 `;
 
 const CheckboxContainer = styled.div`
     width: auto;
-    margin-top: 1rem;
-    margin-right: 1rem;
-    padding: 1rem 1rem;
-    background: #f5f1f1;
-    border-radius: 15px;
     text-align: center;
-
+    padding: 5px 10px;
+    background: #e4e4e4;
+    background:#eeeeee;
+    border-radius: 10px;
+    
     label{
         white-space: nowrap;
         font-weight: 400;
         margin-bottom: 0.2rem;
+        font-size: 0.8rem;
     }
-    
         input{
             width: 30px;
             height: 30px;
+            
+
+            &:hover{
+                cursor: pointer;
+            }
         }
-    
-`;
-
-const InputField = styled.div`
-    margin: 0.8rem 0 1.3rem 0;
-    width: 100%;
-`;
-
-const Fieldset = styled.fieldset`
-    border: none;
+    &:hover{
+        background: #d4d4d4;
+    }  
 `;
 
 const Label = styled.label`
-    font-weight: 800;
-    display: block;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #363636;
 `;
 
 const Input = styled.input`
-    height: 40px;
-    width: 100%;
-    padding: 7px;
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: none;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  padding: 7px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+
+  &::placeholder {
+    font-size: 0.9rem;
+    color: ${(props) => props.theme.lightGrey};
+  }
+
+  &:focus{
+    border: 2px solid #2c9dd1;
+  }
 `;
 
-const SmallInput = styled.input`
-    height: 40px;
-    width: 100%;
-    padding: 7px;
+const SmallSelect = styled.select`
+   width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: none;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  padding: 7px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
 `;
 
-const Textarea = styled.textarea`
-    height: 100px;
-    width: 100%;
-    resize: none;
-    padding: 7px;
+const TextArea = styled.textarea`
+  border: none;
+  outline: none;
+  height: 170px;
+  width: 100%;
+  resize: none;
+  background: none;
+  font-size: 1rem;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  padding: 7px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+  &::placeholder {
+    font-size: 0.9rem;
+    color: ${(props) => props.theme.lightGrey};
+  }
+  &:focus{
+    border: 2px solid #2c9dd1;
+  }
+`;
+
+const SmallTextArea = styled(TextArea)`
+    height: 120px;
 `;
 
 const Button = styled.button`
-    font-size: 1rem;
+  border: none;
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  background: ${props => props.theme.seaBlack};
+  color: white;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+
+  &:disabled{
+    background: ${props=>props.theme.disabledBg};
+    color: ${props=>props.theme.disabledColor};
+    &:hover{
+        cursor: default;
+    }
+  }
+
+  &:hover{
+      cursor: pointer;
+  }
+
+  @media (max-width: 680px){
     padding: 1rem 2rem;
-    border: none;
+  }
+`;
+
+const HelperText = styled.span`
+    font-size: 0.8rem;
+    color: #6b6b6b;
+    font-weight: 400;
+    padding-left: 3px;
 `;

@@ -8,6 +8,8 @@ const theme = {
   orangeWood: "#E9A724",
   darkGrey: "#585858",
   lightGrey: "#919191",
+  disabledBg: "#cacaca",
+  disabledColor: "#646464",
 };
 
 export default theme;

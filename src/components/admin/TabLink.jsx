@@ -4,17 +4,16 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const TabLink = ({ attributes }) => {
-  const { title, subject, message, text, email_from, createdAt } = attributes;
+  const { subject, message, text, email_from, createdAt } = attributes;
 
 
   return (
     <Toggle
-      title={title}
       date={createdAt}
       subject={subject}
       email={email_from}>
       <MessageContainer layout transition={{ ease:[0.6, 0.01, -0.05, 0.95],duration: 0.3}} initial={{opacity: 0, y: 10}} animate={{opacity:1, y: 0}}>
-        <Title layout>{title}</Title>
+        <Title layout>Message</Title>
         <EmailFrom layout>from: {email_from}</EmailFrom>
         <Message layout>{text}{message}</Message>
       </MessageContainer>
