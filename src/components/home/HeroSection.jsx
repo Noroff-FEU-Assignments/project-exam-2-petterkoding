@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Image from "./Image";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
@@ -20,49 +19,56 @@ const HeroSection = ({ establishments }) => {
   }
   return (
     <Wrapper>
-      <Card>
-      <Hidden>
-        <Heading
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2 }}>
-          Visit Bergen
-        </Heading>
-        </Hidden>
-        <MotionContainer
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: [0,.13,.43,.98], duration: 2, delay: 0.7 }}>
-          <Paragraph>
-            Holidaze helps you find enjoyable accommodation in Bergen
-          </Paragraph>
-        <InputContainer>
-          <Label htmlFor="main-search">Search now</Label>
-          <Input
-              autoComplete="off"
-              type="search"
-              id="main-search"
-              name="main-search"
-              onChange={searchHandler}
-              placeholder="Apartments, guesthouses, hotels..."
-            />
-       
-          <SuggestList>
-            {suggestions.map(title => {
-              return (
-                <Suggestions key={title.id}>
-                  <Link
-                    className="styled-links"
-                    to={`accommodations/${title.id}`}>{title.attributes.title}
-                  </Link>
-                </Suggestions>
-              )
-            })}
-          </SuggestList>
-          </InputContainer>
+      <Flex>
+        <div>
+          <Hidden>
+            <Heading
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2 }}>
+              Visit Bergen
+            </Heading>
+          </Hidden>
+          <MotionContainer
+            initial={{opacity: 0 }}
+            animate={{opacity: 1 }}
+            transition={{ ease: [0,.13,.43,.98], duration: 2.2, delay: 0.7 }}>
+            <Paragraph>
+              Holidaze helps you find enjoyable accommodation in Bergen
+            </Paragraph>
           </MotionContainer>
-      </Card>
-      {/* <Image/> */}
+        </div>
+
+        <div>
+          <InputContainer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2.8 }}>
+              <Label
+                htmlFor="main-search">
+                Search now</Label>
+            <Input
+                autoComplete="off"
+                type="search"
+                id="main-search"
+                name="main-search"
+                onChange={searchHandler}
+                placeholder="Apartments, guesthouses, hotels..."/>
+            <SuggestList>
+              {suggestions.map(title => {
+                return (
+                  <Suggestions key={title.id}>
+                    <Link
+                      className="styled-links"
+                      to={`accommodations/${title.id}`}>{title.attributes.title}
+                    </Link>
+                  </Suggestions>
+                )
+              })}
+            </SuggestList>
+          </InputContainer>
+        </div>
+      </Flex>
     </Wrapper>
   );
 };
@@ -70,25 +76,22 @@ const HeroSection = ({ establishments }) => {
 export default HeroSection;
 
 const Wrapper = styled.div`
-  /* width: 400px; */
   position: relative;
-  min-height: 90vh;
+  min-height: 20vh;
+  width: 100%;
 `;
 
-const Card = styled.div`
-  /* margin-top: 4rem; */
+const Flex = styled.div`
   display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  max-width: 500px;
-  border-radius: 15px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
   width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
-  /* background: #ffffff7d;
-  border: 1px solid white; */
+  column-gap: 3rem;
+  
   @media (max-width:680px){
     width: 100%;
+    flex-direction: column;
   }
 `;
 
@@ -110,17 +113,21 @@ const Paragraph = styled.p`
   color: #1a1a1a;
 `;
 
-const Label = styled.label`
+const Label = styled(motion.label)`
   display: block;
   font-size: 1.1rem;
   color: #181818;
   font-weight: 500;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled(motion.div)`
   position: relative;
   width: 350px;
   height: 100%;
+
+  @media (max-width:680px){
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
@@ -131,7 +138,6 @@ const Input = styled.input`
   width: 100%;
   font-size: 1.2rem;
   padding: 7px;
-  border-radius: 10px;
   
   &::placeholder {
     font-size: 0.9rem;
@@ -141,10 +147,11 @@ const Input = styled.input`
 
 const SuggestList = styled.ul`
   background: transparent;
-  width: 80%;
+  width: 100%;
   height: auto;
   position: absolute;
   left: 0;
+  z-index: 100;
 `;
 const Suggestions = styled.li`
   height: 40px;

@@ -40,6 +40,7 @@ const LoginForm = () => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       {loginError && <CreateMessage type="error">{loginError}</CreateMessage>}
       <StyledField disabled={submitting}>
+        
         <InputContainer>
           <Label htmlFor="identifier">Username</Label>
           <Input
@@ -50,6 +51,7 @@ const LoginForm = () => {
           />
           {errors.username && <p>Username must be atleast 3 characters</p>}
         </InputContainer>
+
         <InputContainer>
           <Label htmlFor="password">Password</Label>
           <Input
@@ -60,6 +62,7 @@ const LoginForm = () => {
           />
           {errors.password && <p>Password must be atleast 5 characters</p>}
         </InputContainer>
+
         <Button type="submit" disabled={!isValid}>
           {submitting ? "Logging in" : "Log in"}
         </Button>

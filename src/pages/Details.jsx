@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_URL, ESTABLISHMENTS} from "../constants/API";
+import { BASE_URL, ESTABLISHMENTS, query} from "../constants/API";
 import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
 import EnquiryForm from "../components/contact/EnquiryForm";
 import Motion from "../components/motion/Motion";
+import Loading from "../components/loading/Loading";
 import styled from "styled-components";
 
 const Details = () => {
@@ -15,41 +16,11 @@ const Details = () => {
   const [details, setDetails] = useState([]);
   const [facilities, setFacilities] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [host, setHost] = useState({
-    data: {
-      name: "sara",
-      description: "sss",
-      email: "sss",
-      phone: "sss",
-      rating: "sss",
-      picture: "sss",
-    }
-  });
+  const [host, setHost] = useState({});
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
   const { id } = useParams();
-
-  const qs = require('qs');
-  const query = qs.stringify({
-    populate: {
-      reviews: {
-        populate: '*'
-      },
-      facilities: {
-        populate: '*'
-      },
-      img: {
-        populate: '*'
-      },
-      host: {
-        populate: ['picture'],
-      },
-      
-    } 
-    }, {
-    encodeValuesOnly: true,
-  });
 
   const url = `${BASE_URL}${ESTABLISHMENTS}/${id}?${query}`;
 
@@ -78,7 +49,7 @@ const Details = () => {
     <p>Error occured...</p>
   }
   
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Loading />;
 
  
   return (

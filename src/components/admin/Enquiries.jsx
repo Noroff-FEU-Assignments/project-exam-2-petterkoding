@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 import useAxios from "../../hooks/useAxios";
 import TabLink from './TabLink';
 import { motion } from "framer-motion";
+import Loading from '../loading/Loading';
+import CreateMessage from '../common/CreateMessage';
 import styled from "styled-components";
 
 
 
 const Enquiries = () => {
-const [enquiries, setEnquiries] = useState([]);
+    const [enquiries, setEnquiries] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const http = useAxios();
 
@@ -19,6 +23,10 @@ const [enquiries, setEnquiries] = useState([]);
                 setEnquiries(json);
             } catch (error) {
                 console.log(error)
+                setError(error.toString());
+                setLoading(false);
+            } finally {
+                setLoading(false); 
             }
         }
         
@@ -26,6 +34,9 @@ const [enquiries, setEnquiries] = useState([]);
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    if (error) return <CreateMessage>{error}</CreateMessage>;
+
+    if (loading) return <Loading />;
 
     
     return (

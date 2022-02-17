@@ -32,7 +32,7 @@ export default Footer;
 const SFooter = styled.footer`
     background: ${props=>props.theme.seaBlack};
     height: 180px;
-    margin-top: 7rem;
+    /* margin-top: 7rem; */
     color: white;
 `;
 

@@ -11,16 +11,10 @@ import Enquiries from "./components/admin/Enquiries";
 import Host from "./pages/Host";
 import CreateEstablishment from "./pages/CreateEstablishment";
 import { AuthProvider } from "./context/AuthContext";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyles";
 import theme from "./styles/theme";
-import { AnimatePresence } from "framer-motion";
 
 function App() {
   return (
@@ -53,7 +47,7 @@ function App() {
                 />
               </Routes>
             </Container>
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </Router>
       </ThemeProvider>

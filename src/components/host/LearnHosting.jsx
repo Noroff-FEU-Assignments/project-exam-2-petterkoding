@@ -44,6 +44,7 @@ export default LearnHosting;
 const Wrapper = styled.div`
     position: relative;
     margin-bottom: 10rem;
+    margin: 5rem 0 3rem 0;
 `;
 
 const Grid = styled.div`
@@ -101,4 +102,11 @@ const Button = styled.button`
     background: transparent;
     margin-top: 4rem;
     font-weight: 600;
+    transition: all 0.2s ease;
+
+    &:hover{
+        cursor: pointer;
+        background: ${props => props.theme.seaBlack};
+        color: white;
+    }
 `;

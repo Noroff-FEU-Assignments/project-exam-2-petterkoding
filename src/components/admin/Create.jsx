@@ -15,8 +15,10 @@ const Create = () => {
     const [publishError, setPublishError] = useState(null);
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
-    const [facilities, setFacilities] = useState(facility);
     const [id, setId] = useState("");
+    const [rating, setRating] = useState(1);
+    
+    const facilities = facility;
 
     // const http = useAxios();
 
@@ -30,9 +32,29 @@ const Create = () => {
 
     const url = `${BASE_URL}/api/establishments`;
 
-    const formData = new FormData(); 
+    const formData = new FormData();
+
+
+    const decrement = (e) => {
+        e.preventDefault()
+        if (rating <= 1) {
+            return;
+        } else {
+            setRating(rating - 1)
+        }
+    }
+    const increment = (e) => {
+        e.preventDefault()
+        if (rating === 10) {
+            return;
+        } else {
+            setRating(rating + 1)
+        }
+    }
+
+    console.log(rating)
     
-    async function onSubmit({title, address,description, short_description, type, rating, beds, facilities, img}) {
+    async function onSubmit({ title, address, description, short_description, type, rating, beds, facilities, img }) {
         setSubmitting(true);
         setPublishError(null);
         const data = JSON.stringify({ title, address, description, short_description, type, rating, beds, facilities})        
@@ -47,19 +69,23 @@ const Create = () => {
         }
         try {
             const response = await fetch(url, options);
-            const json = await response.json();
-            console.log(json);
-            setId(json.data.id);
+            if (response.ok) {
+                const json = await response.json();
+                console.log(json);
+                setPublished(true);
+                setId(json.data.id); 
+            }            
         } catch (error) {
             console.log(error)
             setPublishError(error.toString());
             setPublished(false);
         } finally {
             setSubmitting(false)
-            setPublished(true);
             reset();
         }
     }
+
+    console.log(isValid)
 
     
     return (
@@ -101,7 +127,8 @@ const Create = () => {
                     </InputField>
 
                     <InputField>
-                        <Label htmlFor="short_description">Short Description:</Label><HelperText>(This will be the first thing they read, make it enticing!)</HelperText>
+                        <Label htmlFor="short_description">Short Description:</Label>
+                        <HelperText>(This will be the first thing they read, make it enticing!)</HelperText>
                         <SmallTextArea
                             type="text"
                             name="short_description"
@@ -127,16 +154,7 @@ const Create = () => {
                             </SmallSelect>
                             {errors.type && <FormMessage>Type is required</FormMessage>}
                         </InputField>
-                        <InputField style={{flex:1}}>
-                            <Label htmlFor="rating">Rating:</Label>
-                            <HelperText>(R = 1-10)</HelperText>
-                            <Input
-                                type="number"
-                                name="rating"
-                                placeholder="1-10"
-                                {...register("rating", { required: true, min: 1, max: 10 })} />
-                            {errors.rating && <FormMessage>Must be a number 1-10</FormMessage>}
-                        </InputField>
+                    
                         <InputField style={{flex:1}}>
                             <Label htmlFor="beds">Beds:</Label>
                             <HelperText>(Minimum 1)</HelperText>
@@ -144,10 +162,28 @@ const Create = () => {
                                 type="number"
                                 name="beds"
                                 placeholder="Beds"
-                                {...register("beds", { required: true, min: 1})} />
-                            {errors.beds && <FormMessage>Required</FormMessage>}
+                                {...register("beds", { required: true, min: 1, max: 100})} />
+                            {errors.beds && <FormMessage>min. 1 max. 100</FormMessage>}
                         </InputField>
+
                     </Flex>
+                    <InputField style={{flex:1}}>
+                        <Label htmlFor="rating">Rating:</Label>
+                        <HelperText>(Number between 1-10)</HelperText>
+                        <Input
+                            type="number"
+                            name="rating"
+                            value={rating}
+                            placeholder="1-10"
+                            style={{width: "80px"}}
+                            {...register("rating", { required: true, min: 1, max: 10 })} />
+                            <Rating><i className="fas fa-star"></i></Rating>
+                        <Row>
+                            <RatingButton onClick={decrement}>-</RatingButton>
+                            <RatingButton onClick={increment}>+</RatingButton>
+                        </Row>
+                        {errors.rating && <FormMessage>Must be a number 1-10</FormMessage>}
+                    </InputField>
 
                     <InputField>
                         <Label htmlFor="facilities">Add Facilities</Label>
@@ -195,7 +231,7 @@ const Form = styled.form`
     background: #ffffff;
     border-radius: 15px;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
     position: relative;
     margin: 2rem 0 5rem 0;
@@ -216,6 +252,7 @@ const Form = styled.form`
 
     @media (max-width: 680px){
         max-width: 100%;
+        padding: 1.5rem 2rem;
     }
 `;
 
@@ -232,7 +269,14 @@ const Fieldset = styled.fieldset`
 const Flex = styled.div`
     display: flex;
     justify-content: space-between;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+`;
+const Row = styled(Flex)`
+   /* gap: 2rem; */
+   margin-top: 1rem;
+   flex-wrap: nowrap;
+   justify-content: flex-start;
 `;
 
 const CheckboxFlex = styled.div`
@@ -365,8 +409,36 @@ const Button = styled.button`
 `;
 
 const HelperText = styled.span`
+    display: block;
     font-size: 0.8rem;
     color: #6b6b6b;
     font-weight: 400;
     padding-left: 3px;
+`;
+
+const Rating = styled.span`
+    padding-left: 3px;
+    font-size: 1.1rem;
+    color: #ebae08;
+`;
+
+const RatingButton = styled.button`
+    width:30px;
+    height: 30px;
+    border-radius: 100%;
+    background:#eeeeee;
+    border: none;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #424242;
+    /* margin-top: 7px; */
+
+    &:hover{
+        cursor: pointer;
+        background: #d4d4d4;
+        color: #000000;
+    }
+
 `;

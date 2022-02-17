@@ -6,6 +6,7 @@ import Accommodation from './Accommodation';
 import FilterCopy from './FilterCopy';
 import FilterBeds from './FilterBeds';
 import FilterRating from './FilterRating';
+import { motion } from 'framer-motion';
 import styled from "styled-components";
 
 const AccommodationList = () => {
