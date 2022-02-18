@@ -16,8 +16,7 @@ const GlobalStyle = createGlobalStyle`
     body{ 
         font-family: 'Outfit', sans-serif;
         background: #f3f7f8;
-      
-        
+    
     }
 
     #root{

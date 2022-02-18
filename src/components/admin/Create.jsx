@@ -1,6 +1,4 @@
 import React, { useState, useContext} from 'react';
-// import axios from "axios";
-// import useAxios from "../../hooks/useAxios";
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
@@ -20,15 +18,11 @@ const Create = () => {
     
     const facilities = facility;
 
-    // const http = useAxios();
-
     document.title = "Holidaze | Create new establishment";
 
     const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
 
     const { errors, isValid } = formState;
-
-    // const corsURL = "https://noroffcors.herokuapp.com/";
 
     const url = `${BASE_URL}/api/establishments`;
 
@@ -51,8 +45,7 @@ const Create = () => {
             setRating(rating + 1)
         }
     }
-
-    console.log(rating)
+    
     
     async function onSubmit({ title, address, description, short_description, type, rating, beds, facilities, img }) {
         setSubmitting(true);
@@ -85,14 +78,12 @@ const Create = () => {
         }
     }
 
-    console.log(isValid)
-
     
     return (
         <>
             <Heading size="1">Start creating</Heading>
             {publishError && <CreateMessage type="error">{publishError}</CreateMessage>}
-            {published && <CreateMessage type="success">New establishment created! <a href={`/accommodations/${id}`}>Take a look <i className="fas fa-link"></i></a></CreateMessage>}
+            {published && <CreateMessage type="success">New establishment created! <a href={`/accommodations/${id}`}>View it here <i className="fas fa-link"></i></a></CreateMessage>}
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Fieldset disabled={submitting}>
                     <InputField>

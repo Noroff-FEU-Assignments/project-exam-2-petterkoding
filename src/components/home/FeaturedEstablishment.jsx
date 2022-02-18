@@ -65,7 +65,6 @@ const StyledLink = styled(Link)`
 const RatingStars = styled.span`
     font-size: 1rem;
     background: #eeeeee;
-    border: 1px solid #e2ae02;
     border-radius: 15px;
     padding: 2px 7px;
     color: #505050;

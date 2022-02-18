@@ -47,8 +47,8 @@ function App() {
                 />
               </Routes>
             </Container>
-            <Footer />
           </div>
+          <Footer />
         </Router>
       </ThemeProvider>
     </AuthProvider>
