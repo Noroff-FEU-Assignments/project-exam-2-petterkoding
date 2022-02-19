@@ -26,7 +26,7 @@ export default FeaturedEstablishment
 
 
 const Card = styled(motion.div)`
-    width: 350px;
+    width: 100%;
     height: 300px;
 
     &:hover{
@@ -44,7 +44,7 @@ const Container = styled.div`
 
 const Title = styled.h3`
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: #272727;
 `;
 
@@ -53,8 +53,10 @@ const CoverImage = styled.img`
     height: 280px;
     object-fit: cover;
     filter: grayscale(50%);
-
-   
+    
+    @media (max-width: 980px) {
+        height: 220px;
+    }
 `;
 
 

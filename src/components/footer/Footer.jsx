@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
 const Footer = () => {
@@ -7,19 +8,19 @@ const Footer = () => {
             <Container>
                 <FlexContainer>
                     <div>
-                        Holidaze
+                        Holidaze 2022&copy;
                     </div>
                     <List>
-                        <li>About us</li>
-                        <li>Learn hosting</li>
-                        <li>Articles</li>
-                        <li>FAQ</li>
+                        <FooterLinks to="#">About us</FooterLinks>
+                        <FooterLinks to="#">Hosting</FooterLinks>
+                        <FooterLinks to="#">Members</FooterLinks>
+                        <FooterLinks to="#">FAQ</FooterLinks>
                     </List>
                     <List>
-                        <li>Help</li>
-                        <li>Contact</li>
-                        <li>Insurance</li>
-                        <li>Policy</li>
+                        <FooterLinks to="#">Help</FooterLinks>
+                        <FooterLinks to="/contact-us">Contact</FooterLinks>
+                        <FooterLinks to="#">Insurance</FooterLinks>
+                        <FooterLinks to="#">Policy</FooterLinks>
                     </List>
                 </FlexContainer>
             </Container>
@@ -57,3 +58,18 @@ const FlexContainer = styled.div`
 const List = styled.ul`
     list-style: none;
 `;
+
+const FooterLinks = styled(Link)`
+    display: block;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    background: transparent;
+    color: #ffffff;
+    transition: all 0.15s ease;
+
+    &:hover{
+        cursor: pointer;
+        background: #e9e9e98b;
+    }
+`;
+

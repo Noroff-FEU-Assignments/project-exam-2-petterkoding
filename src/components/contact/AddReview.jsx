@@ -6,53 +6,74 @@ import CreateMessage from "../common/CreateMessage";
 import FormMessage from "../common/FormMessage";
 import styled from "styled-components";
 
-const ContactForm = () => {
+const AddReview = () => {
 
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-  const [sent, setSent] = useState(false);
-
-
-  const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
-
-  const { errors, isValid } = formState;
-
-  async function onSubmit(data) {
-    setSubmitting(true);
-    setError(null);
-    console.log(data)
-    try {
-      const response = await axios.post( `${BASE_URL}/api/messages`, {
-        data: data,
-      });
-      console.log(response);
-    } catch (error) {
-      setError(error.toString());
-    } finally {
-      setSubmitting(false)
-      setSent(true);
-      reset();
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState(null);
+    const [sent, setSent] = useState(false);
+  
+  
+    const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
+  
+    const { errors, isValid } = formState;
+  
+    async function onSubmit(data) {
+      setSubmitting(true);
+      setError(null);
+      console.log(data)
+      try {
+        const response = await axios.post( `${BASE_URL}/api/messages`, {
+          data: data,
+        });
+        console.log(response);
+      } catch (error) {
+        setError(error.toString());
+      } finally {
+        setSubmitting(false)
+        setSent(true);
+        reset();
+      }
     }
-  }
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       {error && <CreateMessage type="error">{error}</CreateMessage>}
-      {sent && <CreateMessage type="success">Message was sent!</CreateMessage>}
+      {sent && <CreateMessage type="success">You've posted a Review!</CreateMessage>}
       <StyledField disabled={submitting}>
         
         <InputContainer>
-            <Label htmlFor="subject">Subject</Label>
+            <Label htmlFor="subject">Title</Label>
             <Input
               type="text"
-              name="subject"
-              placeholder="Subject"
-              {...register("subject", {required: true, minLength: 5})}
+              name="title"
+              placeholder="Title"
+              {...register("title", {required: true, minLength: 5})}
             />
-            {errors.subject && <FormMessage>Subject is required</FormMessage>}
+            {errors.title && <FormMessage>Title is required</FormMessage>}
+        </InputContainer>
+              
+        <InputContainer>
+            <Label htmlFor="name">Your name</Label>
+            <Input
+              type="text"
+              name="name"
+              placeholder="Name"
+              {...register("name", {required: true, minLength: 5})}
+            />
+            {errors.name && <FormMessage>Name is required</FormMessage>}
         </InputContainer>
         
         <InputContainer>
+            <Label htmlFor="review_text">Review</Label>
+            <TextArea
+              type="textarea"
+              name="review_text"
+              placeholder="Start writing here"
+              {...register("review_text", {required:true, minLength: 15})}
+            />
+            {errors.review_text && <FormMessage>Review should be atleast 15 characters</FormMessage>}
+        </InputContainer>
+              
+        {/* <InputContainer>
             <Label htmlFor="email">Email</Label>
             <Input
               type="email"
@@ -61,21 +82,10 @@ const ContactForm = () => {
               {...register("email_from", {
                 required: true, pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                }})}
-              />
-            {errors.email_from && <FormMessage>Must be a valid email</FormMessage>}
-        </InputContainer>
-        
-        <InputContainer>
-            <Label htmlFor="message">Message</Label>
-            <TextArea
-              type="textarea"
-              name="text"
-              placeholder="Start writing here"
-              {...register("text", {required:true, minLength: 10})}
+              }})}
             />
-            {errors.text && <FormMessage>Message must be atleast 10 characters</FormMessage>}
-        </InputContainer>
+            {errors.email_from && <FormMessage>Must be a valid email</FormMessage>}
+        </InputContainer> */}
         
         <Button type="submit" disabled={!isValid}>
           {submitting ? "Sending..." : "Send"}
@@ -83,8 +93,10 @@ const ContactForm = () => {
         
       </StyledField>
     </Form>
-  );
-};
+  )
+}
+
+export default AddReview
 
 const Form = styled.form`
   padding: 2rem 3rem;
@@ -158,7 +170,7 @@ const Input = styled.input`
 const TextArea = styled.textarea`
   border: none;
   outline: none;
-  height: 200px;
+  height: 180px;
   width: 100%;
   resize: none;
   background: none;
@@ -203,4 +215,3 @@ const Button = styled.button`
   }
 `;
 
-export default ContactForm;

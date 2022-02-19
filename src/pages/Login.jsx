@@ -5,6 +5,9 @@ import Motion from "../components/motion/Motion";
 import styled from "styled-components";
 
 const Login = () => {
+
+  document.title = "Holidaze | Login";
+
   return (
       <Motion>
         <Container>

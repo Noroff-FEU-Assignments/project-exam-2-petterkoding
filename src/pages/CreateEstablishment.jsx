@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 const CreateEstablishment = () => {
 
+    document.title = "Holidaze | Create new establishment";
+
     return (
         <Motion>
             <Container>

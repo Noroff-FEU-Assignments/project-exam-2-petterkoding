@@ -18,8 +18,6 @@ const Create = () => {
     
     const facilities = facility;
 
-    document.title = "Holidaze | Create new establishment";
-
     const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
 
     const { errors, isValid } = formState;

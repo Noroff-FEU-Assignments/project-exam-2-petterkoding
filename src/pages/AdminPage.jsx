@@ -7,6 +7,8 @@ import Motion from "../components/motion/Motion";
 
 const AdminPage = () => {
 
+  document.title = "Holidaze | Admin Dashboard";
+
   const [auth, setAuth] = useContext(AuthContext);
 
   const history = useNavigate();

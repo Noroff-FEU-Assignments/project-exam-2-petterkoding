@@ -34,7 +34,7 @@ const HeroSection = ({ establishments }) => {
             animate={{opacity: 1 }}
             transition={{ ease: [0,.13,.43,.98], duration: 2.2, delay: 0.7 }}>
             <Paragraph>
-              Holidaze helps you find enjoyable accommodation in Bergen
+              Find enjoyable accommodation in Bergen
             </Paragraph>
           </MotionContainer>
         </div>
@@ -92,6 +92,7 @@ const Flex = styled.div`
   @media (max-width:680px){
     width: 100%;
     flex-direction: column;
+    align-items: stretch;
   }
 `;
 
@@ -105,6 +106,10 @@ const MotionContainer = styled(motion.div)`
 const Heading = styled(motion.h1)`
   font-size: 60px;
   color: #111111;
+
+  @media (max-width: 800px) {
+    font-size: 40px;
+  }
 `;
 
 const Paragraph = styled.p`

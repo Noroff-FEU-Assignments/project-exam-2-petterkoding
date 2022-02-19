@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        scroll-behavior: smooth;
     }
 
     html, body{
@@ -40,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Outfit', sans-serif;
     }
 
-    button{
+    textarea, :-ms-input-placeholder, button{
         font-family: 'Outfit', sans-serif;
     }
 `;

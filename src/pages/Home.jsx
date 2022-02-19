@@ -5,12 +5,16 @@ import { BASE_URL, ESTABLISHMENTS, query } from "../constants/API"
 import LearnHosting from "../components/host/LearnHosting";
 import Featured from "../components/home/Featured";
 import Loading from "../components/loading/Loading";
+import Discount from "../components/home/Discount";
+import SignupForm from "../components/home/SignupForm";
 
 const Home = () => {
 
   const [establishments, setEstablishments] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  document.title = "Holidaze | Travel agency in Bergen";
 
   useEffect(() => {
     async function getEstablishments() {
@@ -38,7 +42,9 @@ const Home = () => {
     <>
       <HeroSection establishments={establishments} />
       <Featured arr={establishments}/>
-      <LearnHosting/>
+      <LearnHosting />
+      <Discount />
+      <SignupForm/>
     </>
   );
 };

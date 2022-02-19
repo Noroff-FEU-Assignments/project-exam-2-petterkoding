@@ -1,18 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
 import host from "../../assets/host.jpg"
 import boat from "../../assets/boat.jpg"
 import Heading from '../common/Heading';
+import { motion } from "framer-motion";
+import styled from 'styled-components';
 
 const LearnHosting = () => {
     return (
-        <Wrapper>   
+        <Wrapper
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{duration: 1}}
+        >   
             <Grid>
                 <TextContainer>
                     <Heading size="2">Say Hi to Lars 👋</Heading>
                     <Paragraph>
-                        At just 24 years old, he's been hosting his own apartment for 2 years already.
-                        Now he's ready to share some of his success with you.
+                        At just 24 years old, he's been hosting for hundreds of tourists for 3 years.
+                        He's ready to share his success with you.
                     </Paragraph>
                     <Button>Learn more</Button>
                 </TextContainer>
@@ -28,10 +34,10 @@ const LearnHosting = () => {
                 </ImageContainer>
                 
                 <TextContainer>
-                    <Heading size="2">Boat trip</Heading>
+                    <Heading size="2">Ahoy Cpt</Heading>
                     <Paragraph>
-                        He loves the sea and taking you out on a spectacular view is his favourite thing to do.
-                        This sought after trip does always bring a smile on your face.
+                        He loves the sea and offers smooth sailing on his boat.
+                        This sought after trip will definitely put a smile on your face.
                     </Paragraph>
                 </TextContainer>
             </Grid>
@@ -41,10 +47,10 @@ const LearnHosting = () => {
 
 export default LearnHosting;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     position: relative;
     margin-bottom: 10rem;
-    margin: 5rem 0 3rem 0;
+    margin: 7rem 0;
 `;
 
 const Grid = styled.div`
@@ -53,10 +59,6 @@ const Grid = styled.div`
     column-gap: 1rem;
     height: 100%;
     margin-bottom: 5rem;
-    @media(max-width: 980px){
-        grid-template-columns: 1fr;
-        margin-bottom: 1rem;
-    }
 `;
 
 
@@ -90,8 +92,11 @@ const Image = styled.img`
     object-fit: cover;
     padding: 4rem;
     @media(max-width: 980px){
+        width: 100%;
+        padding: 2rem;
+        margin: 0 auto;
         padding: 0;
-        height: 500px;
+        height: 300px;
     }
 `;
 

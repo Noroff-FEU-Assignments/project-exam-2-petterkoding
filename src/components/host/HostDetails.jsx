@@ -1,22 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 
-const HostDetails = ({ details }) => {
-
-  const [toggleContact, setToggleContact] = useState(false);
+const HostDetails = ({ details, show, setShow }) => {
 
   const {  name, description, rating, phone, email, picture: { data: { attributes: { url } } } } = details;
 
-  // const hideContact = () => {
-  //   setToggleContact(false);
-  // }
-
   return (
     <>
-      <Button onClick={() => setToggleContact(!toggleContact)}>
-        <i className={ toggleContact ? "fa fa-times" : "far fa-address-book"}></i>
-      </Button>
-      <Card className={toggleContact ? "show" : "hidden"}>
+      <Card className={show ? "show" : "hidden"}>
+        <Button onClick={() => setShow(!show)}><i className="fa fa-times"></i></Button>
         <Flex>
           <ProfilePic src={url} alt="a man wearing glasses"/>
           <InnerFlex>
@@ -35,12 +27,32 @@ const HostDetails = ({ details }) => {
             mail: {email}
           </InfoContainer>
         </ContactInfo>
+        <GoToForm href="#contact-host" onClick={() => setShow(!show)}>Contact host</GoToForm>
       </Card>
+      <Backdrop $isOpen={show} onClick={()=>setShow(false)}/>
     </>
   );
 };
 
 export default HostDetails;
+
+const Backdrop = styled.div`
+  position: absolute;
+  left: 0;
+  top: 65px;
+  background: #00000068;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  display: none;
+
+  @media (max-width: 980px) {
+    display: ${props => props.$isOpen ? "block" : "none"};
+  }
+  @media (max-width: 680px) {
+    top: 60px;
+  }
+`;
 
 const Card = styled.div`
   width: 100%;
@@ -51,22 +63,27 @@ const Card = styled.div`
   border-radius: 15px;
   transition: all 0.4s ease;
 
-
   @media (max-width: 980px) {
     position: absolute;
     top: calc(20vh);
-    right: 0;
-    height: 50vh;
+    left: 0;
+    height: auto;
     width: 100%;
     background: white;
+    z-index: 100;
   }
 
   &.show{
-    right: 0;
+    left: 0;
   }
 
   &.hidden{
-    right: -100%;
+    left: -100%;
+  }
+
+  @media (max-width:980px){
+    margin-top: 1rem;
+    max-width: 100%;
   }
 `;
 
@@ -82,6 +99,10 @@ const InnerFlex = styled.div`
 
 const Name = styled.h2`
   color: black;
+  font-size: 1.4rem;
+  @media (max-width:680px){
+    font-size: 1rem;
+  }
 `;
 
 const Rating = styled.span`
@@ -95,8 +116,13 @@ const Details = styled.p`
   margin-top: 2rem;
   max-width: 600px;
 
-`;
+  @media (max-width:680px){
+    margin-top: 0.5rem;
+    padding: 0;
+    font-size: 1rem;
+  }
 
+`;
 
 const ContactInfo = styled.address`
   padding: 1rem 0;
@@ -131,10 +157,10 @@ const ProfilePic = styled.img`
 `;
 
 const Button = styled.button`
-  width: 80px;
+  width: 60px;
   height: 60px;
-  border-radius: 25px;
-  background: #f8f8f8e2;
+  border-radius: 100%;
+  background: #f8f8f8;
   border: none;
   display: none;
   transition: all 0.2s ease;
@@ -154,8 +180,25 @@ const Button = styled.button`
   @media (max-width: 980px) {
     display: block;
     position: absolute;
-    right: 0;
-    top: 20vh;
-    z-index: 100000;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+  }
+`;
+
+const GoToForm = styled.a`
+  display: inline-block;
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  color: #1d1d1d;
+  border-radius: 20px;
+  border: 1px solid black;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+
+  &:hover{
+    background: ${props => props.theme.seaBlack};
+    color: white;
   }
 `;

@@ -41,7 +41,7 @@ const ContactForm = () => {
     <>
       <Heading size="3">Any questions about this establishment?</Heading>
       <Paragraph>Don't hesitate to contact the host!</Paragraph>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} id="contact-host">
       {error && <CreateMessage type="error">{error}</CreateMessage>}
       {sent && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
         <StyledField disabled={submitting}>

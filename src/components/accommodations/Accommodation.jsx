@@ -82,7 +82,10 @@ const Image = styled.img`
     }
     @media (max-width: 680px) {
         width: 100%;
-        height: 190px;
+        /* height: 230px; */
+    }
+    @media (max-width: 500px) {
+        height: 260px;
     }
 `;
 

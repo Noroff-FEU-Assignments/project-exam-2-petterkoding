@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
-function Filter({ arr, setState, activeFilter, setFilterOption, filterType }) {
+function FilterTypes({ arr, setState, activeFilter, setFilterOption, filterType }) {
     
     let filterBy = {};
 
@@ -34,7 +34,7 @@ function Filter({ arr, setState, activeFilter, setFilterOption, filterType }) {
     )
 };
 
-export default Filter;
+export default FilterTypes;
 
 const FilterContainer = styled.div`
     margin: 1rem 1rem 0 0;

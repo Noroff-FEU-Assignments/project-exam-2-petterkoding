@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL, ESTABLISHMENTS, POPULATE} from "../../constants/API";
 import Accommodation from './Accommodation';
 // import FilterType from './FilterType';
-import FilterCopy from './FilterCopy';
+import FilterTypes from './FilterTypes';
 import FilterBeds from './FilterBeds';
 import FilterRating from './FilterRating';
 import { motion } from 'framer-motion';
@@ -44,7 +44,7 @@ const AccommodationList = () => {
     return (
         <>
             <FilterOptions>
-                {establishments && <FilterCopy arr={establishments} setState={setFiltered} activeFilter={activeType} setFilterOption={setActiveType} filterType="type" />}
+                {establishments && <FilterTypes arr={establishments} setState={setFiltered} activeFilter={activeType} setFilterOption={setActiveType} filterType="type" />}
                 {establishments && <FilterBeds arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="beds" />}
                 {establishments && <FilterRating arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="rating" />}
                 <Button onClick={()=> setFiltered(establishments)}><i className="fas fa-redo"></i></Button>

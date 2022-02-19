@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
 import Review from "./Review";
 import Heading from '../../common/Heading';
+import AddReview from '../../contact/AddReview';
+import styled from "styled-components";
 
 const ReviewList = ({ reviews }) => {
     return (
@@ -20,6 +21,7 @@ const ReviewList = ({ reviews }) => {
                         })
                 }
             </Flex>
+            <AddReview/>
         </>
     );
 };

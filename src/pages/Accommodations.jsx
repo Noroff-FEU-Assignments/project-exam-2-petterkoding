@@ -5,6 +5,9 @@ import Paragraph from "../components/common/Paragraph";
 import Motion from "../components/motion/Motion";
 
 const Accommodations = () => {
+
+  document.title = "Holidaze | Find Accommodation";
+
   return(
     <Motion>
       <Heading size="1">Accommodations</Heading>

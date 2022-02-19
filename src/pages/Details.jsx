@@ -9,6 +9,7 @@ import Heading from "../components/common/Heading";
 import EnquiryForm from "../components/contact/EnquiryForm";
 import Motion from "../components/motion/Motion";
 import Loading from "../components/loading/Loading";
+import CreateMessage from "../components/common/CreateMessage";
 import styled from "styled-components";
 
 const Details = () => {
@@ -19,6 +20,9 @@ const Details = () => {
   const [host, setHost] = useState({});
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState(null);
+  const [show, setShow] = useState(false);
+
+
 
   const { id } = useParams();
 
@@ -29,12 +33,12 @@ const Details = () => {
       try {
         const response = await axios.get(url);
         const json = response.data.data.attributes;
+        console.log(json)
         setDetails(json);
         setFacilities(json.facilities.data);
         setReviews(json.reviews.data);
         setHost(json.host?.data?.attributes);
-        console.log("details", json)
-    
+        document.title = `Holidaze | ${json.title}`
       } catch (error) {
         console.log(error)
         setErrors(error)
@@ -45,9 +49,9 @@ const Details = () => {
     getDetails();
   }, [url])
 
-  if (errors) {
-    <p>Error occured...</p>
-  }
+
+  if (errors) return <CreateMessage>{errors}</CreateMessage>;
+  
   
   if (loading) return <Loading />;
 
@@ -56,8 +60,10 @@ const Details = () => {
     <Motion>
       <FlexContainer>
         <MainImage src={details.img.data.attributes.url} alt={details.img.data.attributes.alternativeText}/>
-        {host && <HostDetails details={host} />}
+        {host && <HostDetails details={host} show={show} setShow={setShow}/>}
       </FlexContainer>
+
+      <ToggleHostInfo onClick={()=>setShow(!show)}>View Host</ToggleHostInfo>
 
       <Heading size="1">
         {details.title}      
@@ -105,9 +111,11 @@ const MainImage = styled.img`
   margin-right: 2rem;
   border-radius: 15px;
 
-  @media (max-width:680px){
+  @media (max-width:980px){
     margin-right: 0;
     margin-bottom: 1rem;
+    max-width: 100%;
+    height: 340px;
   }
 `;
 
@@ -144,3 +152,29 @@ const Address = styled.address`
 `;
 
 
+const ToggleHostInfo = styled.button`
+  padding: 0.7rem 1rem;
+  display: none;
+  border: none;
+  border-radius: 20px;
+  border: 1px solid black;
+  background: none;
+  margin-left: auto;
+  margin-top: -20px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover{
+    cursor: pointer;
+    background: ${props=>props.theme.seaBlack};
+    color: white;
+  }
+
+  @media (max-width: 980px) {
+    display: block;
+  }
+  @media (max-width: 600px) {
+   width: 100%;
+   margin-bottom: 1rem;
+  }
+`;

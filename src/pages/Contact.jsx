@@ -5,6 +5,9 @@ import ContactForm from '../components/contact/ContactForm';
 import Motion from '../components/motion/Motion';
 
 const Contact = () => {
+
+  document.title = "Holidaze | Contact us";
+
   return (
     <Motion>
       <Container>

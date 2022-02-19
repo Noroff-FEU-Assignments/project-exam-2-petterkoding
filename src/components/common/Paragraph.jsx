@@ -9,7 +9,7 @@ export default Paragraph;
 
 const StyledP = styled.p`
     color: ${props => props.theme.darkGrey};
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     max-width: 660px;
     margin: 0.5rem 0;
 `;
