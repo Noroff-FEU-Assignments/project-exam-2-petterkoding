@@ -179,7 +179,7 @@ const TextArea = styled.textarea`
 const Button = styled.button`
   border: none;
   font-size: 1.3rem;
-  padding: 1rem 2rem;
+  padding: 0.6rem 1.6rem;
   border-radius: 15px;
   background: ${props => props.theme.seaBlack};
   color: white;

@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
     html, body{
         height: 100%;
-        /* overflow-x: hidden; */
+        overflow-x: hidden;
         
     }
 
@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
     .wrapper{
         flex: 1 0 auto;
+        min-height: 100vh;
         
     }
 

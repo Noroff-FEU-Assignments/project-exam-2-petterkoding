@@ -11,7 +11,7 @@ const Accommodations = () => {
   return(
     <Motion>
       <Heading size="1">Accommodations</Heading>
-      <Paragraph>We hope you find what you're looking for! Remember that you can use the filter below to narrow down the list.</Paragraph>
+      <Paragraph>We hope you find what you're looking for!</Paragraph>
       <AccommodationList/>
     </Motion>
   );

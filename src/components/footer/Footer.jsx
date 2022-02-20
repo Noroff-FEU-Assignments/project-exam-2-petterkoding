@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -7,9 +8,11 @@ const Footer = () => {
         <SFooter>
             <Container>
                 <FlexContainer>
-                    <div>
-                        Holidaze 2022&copy;
-                    </div>
+                    <Address>
+                        <span>Holidaze Travels&reg;</span>
+                        <span>Bryggaveien 32,</span>
+                        <span>5014, Bergen</span>
+                    </Address>
                     <List>
                         <FooterLinks to="#">About us</FooterLinks>
                         <FooterLinks to="#">Hosting</FooterLinks>
@@ -36,6 +39,12 @@ const SFooter = styled.footer`
     margin-top: 7rem;
     color: white;
     flex-shrink: 0;
+`;
+
+const Address = styled.address`
+    display: flex;
+    flex-direction: column;
+
 `;
 
 const Container = styled.div`

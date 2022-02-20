@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import Heading from '../common/Heading';
 import { useForm } from "react-hook-form";
-import Paragraph from '../common/Paragraph';
 import FormMessage from '../common/FormMessage';
 import CreateMessage from '../common/CreateMessage';
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const SignupForm = () => {
@@ -31,13 +30,17 @@ const SignupForm = () => {
     }
 
   return (
-        <Container>
+        <Container
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{duration: 1.3}}>
             <Text>
               <h4>Not a member?</h4>
               <p>Join now, it's 100% FREE!</p>
               <p>Get access to the Holidaze advantage program.</p>
-          </Text>
-          {sent && <CreateMessage type="success">Thanks for signing up! Confirmation is sent to {email.email}</CreateMessage>}
+            </Text>
+            {sent && <CreateMessage type="success">Thanks for signing up! Confirmation is sent to {email.email}</CreateMessage>}
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Fieldset disabled={submitting}>
                     <InputContainer>
@@ -92,7 +95,7 @@ const Form = styled.form`
   }
 `;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
     width: 70%;
     margin: 0 auto;
     margin-top: 3rem;

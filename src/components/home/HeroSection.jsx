@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import rooftops from "../../assets/rooftops.jpg";
+import market from "../../assets/market.jpg";
+import outdoor from "../../assets/outdoor.jpg";
+import mountains from "../../assets/mountains.jpg";
 import styled from "styled-components";
 
 
@@ -25,25 +29,25 @@ const HeroSection = ({ establishments }) => {
             <Heading
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2 }}>
+              transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2, delay: 2.5 }}>
               Visit Bergen
             </Heading>
           </Hidden>
-          <MotionContainer
+          <motion.div
             initial={{opacity: 0 }}
             animate={{opacity: 1 }}
-            transition={{ ease: [0,.13,.43,.98], duration: 2.2, delay: 0.7 }}>
+            transition={{ ease: [0,.13,.43,.98], duration: 2.2, delay: 3.1 }}>
             <Paragraph>
               Find enjoyable accommodation in Bergen
             </Paragraph>
-          </MotionContainer>
+          </motion.div>
         </div>
 
         <div>
           <InputContainer
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2.8 }}>
+            transition={{ ease: [0.6, 0.01, -0.05, 0.95], duration: 2.8, delay: 2.4 }}>
               <Label
                 htmlFor="main-search">
                 Search now</Label>
@@ -57,23 +61,58 @@ const HeroSection = ({ establishments }) => {
             <SuggestList>
               {suggestions.map(title => {
                 return (
-                  <Suggestions key={title.id}>
-                    <Link
-                      className="styled-links"
-                      to={`accommodations/${title.id}`}>{title.attributes.title}
-                    </Link>
+                  <Suggestions
+                    key={title.id}
+                    to={`accommodations/${title.id}`}>{title.attributes.title}
                   </Suggestions>
+                 
                 )
               })}
             </SuggestList>
           </InputContainer>
         </div>
       </Flex>
+      
+      <AnimateContain
+        initial={{y: -180,opacity: 0, height: "900px"}}
+        animate={{y: 0, opacity: 1, height: "340px"}}
+        transition={{ duration: 3, delay: 0.2 }}>
+        
+        <AnimText1
+          initial={{opacity: 0, y:20}}
+          animate={{opacity: [0,1,1]}}
+          transition={{duration: 4, delay: 0.6}}
+          >Holidaze
+        </AnimText1>
+      </AnimateContain>
+      
     </Wrapper>
   );
 };
 
 export default HeroSection;
+
+const AnimText1 = styled(motion.span)`
+  display: block; 
+  font-size: calc(4rem + 5vw);
+  color: #f0ebeb;
+  margin-top: 1.4rem;
+
+  @media (max-width: 980px){
+    font-size: calc(3rem + 2vw);
+  }
+`;
+
+const AnimateContain = styled(motion.div)`
+  margin-top: 1rem;
+  background-image: url(${market});
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: calc(100% - 65px);
+  display: flex;
+  justify-content: center;
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -98,9 +137,6 @@ const Flex = styled.div`
 
 const Hidden = styled.div`
   overflow: hidden;
-`;
-
-const MotionContainer = styled(motion.div)`
 `;
 
 const Heading = styled(motion.h1)`
@@ -129,7 +165,6 @@ const InputContainer = styled(motion.div)`
   position: relative;
   width: 350px;
   height: 100%;
-
   @media (max-width:680px){
     width: 100%;
   }
@@ -143,6 +178,11 @@ const Input = styled.input`
   width: 100%;
   font-size: 1.2rem;
   padding: 7px;
+  position: relative;
+  z-index: 20;
+  background: #f5f1f1;
+  border: 1px solid #3d2727;
+  border-radius: 5px;
   
   &::placeholder {
     font-size: 0.9rem;
@@ -150,31 +190,33 @@ const Input = styled.input`
   }
 `;
 
-const SuggestList = styled.ul`
-  background: transparent;
+const SuggestList = styled.div`
+  background: white;
   width: 100%;
   height: auto;
   position: absolute;
   left: 0;
-  z-index: 100;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column; 
 `;
-const Suggestions = styled.li`
+
+const Suggestions = styled(Link)`
+  width: 100%;  
   height: 40px;
-  background: white;
+  color: black;
   list-style: none;
-  border-bottom: 1px solid #3f3f3f55;
-  .styled-links{
-    display: block;
-      width: 100%;
-      height: 100%;
-      color: black;
-      text-transform: capitalize;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      padding-left: 7px;
-      &:hover{
-        background: #d4d4d3;
-      }
+  border-bottom: 1px solid #58585854;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;   
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding-left: 7px;
+
+    &:hover{
+      background: #e2e2e2;
     }
 `;
 

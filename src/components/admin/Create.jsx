@@ -14,7 +14,6 @@ const Create = () => {
     const [submitting, setSubmitting] = useState(false);
     const [auth, setAuth] = useContext(AuthContext);
     const [id, setId] = useState("");
-    const [rating, setRating] = useState(1);
     
     const facilities = facility;
 
@@ -26,24 +25,7 @@ const Create = () => {
 
     const formData = new FormData();
 
-
-    const decrement = (e) => {
-        e.preventDefault()
-        if (rating <= 1) {
-            return;
-        } else {
-            setRating(rating - 1)
-        }
-    }
-    const increment = (e) => {
-        e.preventDefault()
-        if (rating === 10) {
-            return;
-        } else {
-            setRating(rating + 1)
-        }
-    }
-    
+   
     
     async function onSubmit({ title, address, description, short_description, type, rating, beds, facilities, img }) {
         setSubmitting(true);
@@ -127,7 +109,7 @@ const Create = () => {
                     </InputField>
 
                     <Flex>
-                        <InputField style={{flex:2}}>
+                        <InputField style={{flex:3}}>
                             <Label htmlFor="title">Type:</Label>
                             <HelperText>(Please choose one)</HelperText>
                             <SmallSelect
@@ -143,8 +125,7 @@ const Create = () => {
                             </SmallSelect>
                             {errors.type && <FormMessage>Type is required</FormMessage>}
                         </InputField>
-                    
-                        <InputField style={{flex:1}}>
+                        <InputField style={{flex:2}}>
                             <Label htmlFor="beds">Beds:</Label>
                             <HelperText>(Minimum 1)</HelperText>
                             <Input
@@ -155,24 +136,21 @@ const Create = () => {
                             {errors.beds && <FormMessage>min. 1 max. 100</FormMessage>}
                         </InputField>
 
+                        <InputField style={{flex:1}}>
+                            <Label htmlFor="rating">Rating:</Label>
+                            <HelperText>(1-10)</HelperText>
+                            <Input
+                                type="number"
+                                name="rating"
+                                defaultValue="1"
+                                min="1"
+                                max="10"
+                                placeholder="1-10"
+                                style={{width: "80px"}}
+                                {...register("rating", { required: true, min: 1, max: 10 })} />
+                            {errors.rating && <FormMessage>Must be a number 1-10</FormMessage>}
+                        </InputField>
                     </Flex>
-                    <InputField style={{flex:1}}>
-                        <Label htmlFor="rating">Rating:</Label>
-                        <HelperText>(Number between 1-10)</HelperText>
-                        <Input
-                            type="number"
-                            name="rating"
-                            value={rating}
-                            placeholder="1-10"
-                            style={{width: "80px"}}
-                            {...register("rating", { required: true, min: 1, max: 10 })} />
-                            <Rating><i className="fas fa-star"></i></Rating>
-                        <Row>
-                            <RatingButton onClick={decrement}>-</RatingButton>
-                            <RatingButton onClick={increment}>+</RatingButton>
-                        </Row>
-                        {errors.rating && <FormMessage>Must be a number 1-10</FormMessage>}
-                    </InputField>
 
                     <InputField>
                         <Label htmlFor="facilities">Add Facilities</Label>
@@ -260,12 +238,6 @@ const Flex = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 1.8rem;
-`;
-const Row = styled(Flex)`
-   /* gap: 2rem; */
-   margin-top: 1rem;
-   flex-wrap: nowrap;
-   justify-content: flex-start;
 `;
 
 const CheckboxFlex = styled.div`
@@ -403,31 +375,4 @@ const HelperText = styled.span`
     color: #6b6b6b;
     font-weight: 400;
     padding-left: 3px;
-`;
-
-const Rating = styled.span`
-    padding-left: 3px;
-    font-size: 1.1rem;
-    color: #ebae08;
-`;
-
-const RatingButton = styled.button`
-    width:30px;
-    height: 30px;
-    border-radius: 100%;
-    background:#eeeeee;
-    border: none;
-    font-size: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #424242;
-    /* margin-top: 7px; */
-
-    &:hover{
-        cursor: pointer;
-        background: #d4d4d4;
-        color: #000000;
-    }
-
 `;

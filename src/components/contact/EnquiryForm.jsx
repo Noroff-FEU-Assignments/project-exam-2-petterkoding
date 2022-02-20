@@ -90,7 +90,7 @@ const Form = styled.form`
   background: #ffffff;
   border-radius: 15px;
   width: 100%;
-  max-width: 440px;
+  max-width: calc(800px + 2rem);
   box-shadow: 4px 7px 20px rgba(0, 0, 0, .2);
   position: relative;
   margin: 2rem 0 5rem 0;
@@ -178,7 +178,7 @@ const TextArea = styled.textarea`
 const Button = styled.button`
   border: none;
   font-size: 1.3rem;
-  padding: 1rem 2rem;
+  padding: 0.6rem 1.6rem;
   border-radius: 15px;
   background: ${props => props.theme.seaBlack};
   color: white;

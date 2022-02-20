@@ -33,7 +33,7 @@ const Card = styled(motion.div)`
         cursor: pointer;
     }
 
-    @media (max-width: 680px){
+    @media (max-width: 980px){
         width: 100%;
     }
 `;
@@ -50,7 +50,7 @@ const Title = styled.h3`
 
 const CoverImage = styled.img`
     width: 100%;
-    height: 280px;
+    height: 200px;
     object-fit: cover;
     filter: grayscale(50%);
     

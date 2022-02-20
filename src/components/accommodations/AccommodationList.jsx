@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL, ESTABLISHMENTS, POPULATE} from "../../constants/API";
 import Accommodation from './Accommodation';
-// import FilterType from './FilterType';
 import FilterTypes from './FilterTypes';
 import FilterBeds from './FilterBeds';
 import FilterRating from './FilterRating';
-import { motion } from 'framer-motion';
 import styled from "styled-components";
 
 const AccommodationList = () => {

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { BASE_URL, ESTABLISHMENTS, query} from "../constants/API";
 import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
+import AddReview from "../components/contact/AddReview";
 import Facilities from "../components/accommodations/details/Facilities";
 import Heading from "../components/common/Heading";
 import EnquiryForm from "../components/contact/EnquiryForm";
@@ -30,10 +31,10 @@ const Details = () => {
 
   useEffect(() => {
     async function getDetails() {
+      
       try {
         const response = await axios.get(url);
         const json = response.data.data.attributes;
-        console.log(json)
         setDetails(json);
         setFacilities(json.facilities.data);
         setReviews(json.reviews.data);
@@ -78,6 +79,7 @@ const Details = () => {
       <Facilities list={facilities} beds={details.beds} />
       
       <ReviewList reviews={reviews} />
+      <AddReview id={id}/>
 
       <EnquiryForm/>
       

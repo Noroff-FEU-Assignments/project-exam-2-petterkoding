@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import FeaturedEstablishment from './FeaturedEstablishment';
 import {motion} from "framer-motion";
 import styled from "styled-components";
-import Paragraph from '../common/Paragraph';
 
 const Featured = ({ arr }) => {
 
@@ -13,7 +12,6 @@ const Featured = ({ arr }) => {
         setFeatured(featuredList)
     },[arr])
     
-    console.log(featured)
 
   return (
         <Container>
@@ -21,14 +19,14 @@ const Featured = ({ arr }) => {
                 <MotionHeading
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{duration: 1.5}}>
+                    transition={{duration: 1.5, delay: 2}}>
                     Featured
                 </MotionHeading>
             </Hidden>
             <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{duration: 1.8, delay: 1}}>
+                transition={{duration: 1.8, delay: 2.2}}>
                 Community ranks the best places to stay in Bergen 2022
             </motion.p>
             <Flex>
@@ -37,7 +35,7 @@ const Featured = ({ arr }) => {
                             key={est.id}
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1}}
-                            transition={{ duration: 0.5, delay: i + 0.5 * 0.3 }}>
+                            transition={{ duration: 0.5, delay: i + 3 * 0.4 }}>
                             <FeaturedEstablishment attributes={est.attributes} id={est.id} />
                         </motion.div>)
                     )}
@@ -58,7 +56,7 @@ const Flex = styled.div`
     gap: 2rem;
     margin-top: 2rem;
 
-    @media (max-width: 680px) {
+    @media (max-width: 980px) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 270px;
