@@ -72,8 +72,8 @@ const Create = () => {
                             type="text"
                             name="title"
                             placeholder="Title"
-                            {...register("title", {required: true, minLength: 8})}/>
-                            {errors.title && <FormMessage>Title is too short</FormMessage>}
+                            {...register("title", {required: true, minLength: 5, maxLength:15})}/>
+                            {errors.title && <FormMessage>Title must be between 5-15 characters</FormMessage>}
                     </InputField>
                     
                     <InputField>

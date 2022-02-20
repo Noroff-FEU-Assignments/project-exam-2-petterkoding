@@ -95,7 +95,7 @@ export default HeroSection;
 const AnimText1 = styled(motion.span)`
   display: block; 
   font-size: calc(4rem + 5vw);
-  color: #f0ebeb;
+  color: #f0e9e7;
   margin-top: 1.4rem;
 
   @media (max-width: 980px){

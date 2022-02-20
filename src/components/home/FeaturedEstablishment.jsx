@@ -46,6 +46,10 @@ const Title = styled.h3`
     font-weight: 400;
     font-size: 1.3rem;
     color: #272727;
+
+    @media (max-width: 480px){
+        font-size: 1rem;
+    }
 `;
 
 const CoverImage = styled.img`

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -34,11 +33,11 @@ const Footer = () => {
 export default Footer;
 
 const SFooter = styled.footer`
-    background: ${props=>props.theme.seaBlack};
     height: 180px;
     margin-top: 7rem;
-    color: white;
+    color: black;
     flex-shrink: 0;
+    border-top: 1px solid #554949;
 `;
 
 const Address = styled.address`
@@ -73,12 +72,12 @@ const FooterLinks = styled(Link)`
     text-decoration: none;
     padding: 0.3rem 0.5rem;
     background: transparent;
-    color: #ffffff;
+    color: black;
     transition: all 0.15s ease;
 
     &:hover{
         cursor: pointer;
-        background: #e9e9e98b;
+        background: #acacac8a;
     }
 `;
 

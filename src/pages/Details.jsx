@@ -6,7 +6,6 @@ import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
 import AddReview from "../components/contact/AddReview";
 import Facilities from "../components/accommodations/details/Facilities";
-import Heading from "../components/common/Heading";
 import EnquiryForm from "../components/contact/EnquiryForm";
 import Motion from "../components/motion/Motion";
 import Loading from "../components/loading/Loading";
@@ -66,7 +65,7 @@ const Details = () => {
 
       <ToggleHostInfo onClick={()=>setShow(!show)}>View Host</ToggleHostInfo>
 
-      <Heading size="1">
+      <Heading>
         {details.title}      
         <TypeBadge>{details.type}</TypeBadge>
         <Rating>{details.rating} <i className="fas fa-star"></i></Rating>
@@ -121,6 +120,19 @@ const MainImage = styled.img`
   }
 `;
 
+const Heading = styled.h1`
+  color: black;
+  font-size: 2.4rem;
+
+  @media (max-width:980px){
+    font-size: 2rem;
+  }
+
+  @media (max-width:480px){
+    font-size: 1.4rem;
+  }
+`;
+
 
 const TypeBadge = styled.span`
   color: ${props => props.theme.seaWater};
@@ -129,6 +141,10 @@ const TypeBadge = styled.span`
   padding: 3px 5px;
   border-radius: 22px;
   margin-left: 1rem;
+
+  @media (max-width:480px){
+    font-size: 0.7rem;
+  }
 `;
 
 const Rating = styled.span`
@@ -139,6 +155,10 @@ const Rating = styled.span`
   padding: 3px 5px;
   border-radius: 22px;
   font-weight: 400;
+
+  @media (max-width:480px){
+    font-size: 0.7rem;
+  }
 `;
 
 
