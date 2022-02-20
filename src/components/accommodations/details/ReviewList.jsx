@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const ReviewList = ({ reviews }) => {    
     return (
-        <>
+        <Container>
             <Heading size="2">Reviews (<ReviewCount>{reviews?.length}</ReviewCount>)</Heading>
             <Flex>
                 {reviews.length > 0 ?
@@ -19,11 +19,16 @@ const ReviewList = ({ reviews }) => {
                 : <NoReviews>Seems like there's no reviews yet.</NoReviews>}
                  
             </Flex>
-        </>
+        </Container>
     );
 };
 
 export default ReviewList;
+
+const Container = styled.div`
+    margin-top: 4rem;
+    margin-bottom: 7rem;
+`;
 
 const Flex = styled.div`
     display: flex;

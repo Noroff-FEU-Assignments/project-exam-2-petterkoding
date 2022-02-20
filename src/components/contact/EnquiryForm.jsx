@@ -52,9 +52,9 @@ const ContactForm = () => {
               type="text"
               name="subject"
               placeholder="Subject"
-              {...register("subject", {required: true, minLength: 5, maxLength: 10})}
+              {...register("subject", {required: true, minLength: 2, maxLength: 10})}
             />
-            {errors.subject && <FormMessage>Subject is required</FormMessage>}
+            {errors.subject && <FormMessage>Subject must be 2 - 10 characters</FormMessage>}
           </InputContainer>
           <InputContainer>
             <Label htmlFor="email">Email</Label>
