@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import rooftops from "../../assets/rooftops.jpg";
 import market from "../../assets/market.jpg";
-import outdoor from "../../assets/outdoor.jpg";
-import mountains from "../../assets/mountains.jpg";
 import styled from "styled-components";
 
 
@@ -82,7 +79,7 @@ const HeroSection = ({ establishments }) => {
           initial={{opacity: 0, y:20}}
           animate={{opacity: [0,1,1]}}
           transition={{duration: 4, delay: 0.6}}
-          >Holidaze
+          >Accommodations
         </AnimText1>
       </AnimateContain>
       
@@ -96,7 +93,6 @@ const AnimText1 = styled(motion.span)`
   display: block; 
   font-size: calc(4rem + 5vw);
   color: #f0e9e7;
-  margin-top: 1.4rem;
 
   @media (max-width: 980px){
     font-size: calc(3rem + 2vw);
@@ -112,6 +108,8 @@ const AnimateContain = styled(motion.div)`
   height: calc(100% - 65px);
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const Wrapper = styled.div`
