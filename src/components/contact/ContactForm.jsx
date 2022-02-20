@@ -25,12 +25,15 @@ const ContactForm = () => {
       const response = await axios.post( `${BASE_URL}/api/messages`, {
         data: data,
       });
+
+      if (response.ok) {
+        setSent(true);
+      }
       console.log(response);
     } catch (error) {
       setError(error.toString());
     } finally {
       setSubmitting(false)
-      setSent(true);
       reset();
     }
   }
@@ -40,7 +43,7 @@ const ContactForm = () => {
       {error && <CreateMessage type="error">{error}</CreateMessage>}
       {sent && <CreateMessage type="success">Message was sent!</CreateMessage>}
       <StyledField disabled={submitting}>
-        
+  
         <InputContainer>
             <Label htmlFor="subject">Subject</Label>
             <Input

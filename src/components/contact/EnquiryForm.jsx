@@ -27,12 +27,14 @@ const ContactForm = () => {
       const response = await axios.post( `${BASE_URL}/api/enquiries`, {
         data: data,
       });
+      if (response.ok) {
+        setSent(true);
+      }
       console.log(response);
     } catch (error) {
       setError(error.toString());
     } finally {
       setSubmitting(false);
-      setSent(true);
       reset();
     }
   }
@@ -46,6 +48,7 @@ const ContactForm = () => {
       {error && <CreateMessage type="error">{error}</CreateMessage>}
       {sent && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
         <StyledField disabled={submitting}>
+
           <InputContainer>
             <Label htmlFor="subject">Subject</Label>
             <Input
@@ -56,6 +59,7 @@ const ContactForm = () => {
             />
             {errors.subject && <FormMessage>Subject must be 2 - 10 characters</FormMessage>}
           </InputContainer>
+
           <InputContainer>
             <Label htmlFor="email">Email</Label>
             <Input
@@ -69,6 +73,7 @@ const ContactForm = () => {
             />
             {errors.email_from && <FormMessage>Must be a valid email</FormMessage>}
           </InputContainer>
+
           <InputContainer>
             <Label htmlFor="message">Message</Label>
             <TextArea
@@ -79,6 +84,7 @@ const ContactForm = () => {
             />
             {errors.message && <FormMessage>Message must be atleast 10 characters</FormMessage>}
           </InputContainer>
+          
           <Button type="submit" disabled={!isValid}>Send</Button>
         </StyledField>
       </Form>
