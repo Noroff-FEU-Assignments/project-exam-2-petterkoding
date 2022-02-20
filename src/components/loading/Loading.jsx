@@ -1,11 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Loading = () => {
-
-    const [isLoading, setIsLoading] = useState(true);
-
     const loadingText = "Loading ...";
   return (
       <Container>
