@@ -47,7 +47,7 @@ const ContactForm = () => {
               type="text"
               name="subject"
               placeholder="Subject"
-              {...register("subject", {required: true, minLength: 5})}
+              {...register("subject", {required: true, minLength: 5, maxLength: 10})}
             />
             {errors.subject && <FormMessage>Subject is required</FormMessage>}
         </InputContainer>

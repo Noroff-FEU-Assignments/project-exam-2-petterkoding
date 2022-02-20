@@ -23,14 +23,18 @@ export default Facilities;
 
 
 const Container = styled.div`
-    margin: 2rem 0;
+    margin: 4rem 0;
 `;
 
 const List = styled.ul`
     list-style: none;
     margin: 0.5rem 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
 `;
 
 const ListItem = styled.li`
-    padding: 0.7rem 0;
+    padding: 0.7rem 1rem;
+    margin: .5rem 0.3rem .5rem 0;
+    background: ${props=>props.theme.clouds};
 `;

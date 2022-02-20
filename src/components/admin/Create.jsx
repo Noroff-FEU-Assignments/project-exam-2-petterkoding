@@ -72,8 +72,8 @@ const Create = () => {
                             type="text"
                             name="title"
                             placeholder="Title"
-                            {...register("title", {required: true, minLength: 5, maxLength:15})}/>
-                            {errors.title && <FormMessage>Title must be between 5-15 characters</FormMessage>}
+                            {...register("title", {required: true, minLength: 3, maxLength:12})}/>
+                            {errors.title && <FormMessage>Title must be between 3-12 characters</FormMessage>}
                     </InputField>
                     
                     <InputField>
@@ -82,7 +82,7 @@ const Create = () => {
                             type="text"
                             name="address"
                             placeholder="Address"
-                            {...register("address", {required: true, minLength: 13})}/>
+                            {...register("address", {required: true, minLength: 8})}/>
                             {errors.address && <FormMessage>Address is required</FormMessage>}
                     </InputField>
                     
@@ -93,7 +93,7 @@ const Create = () => {
                             type="text"
                             name="description"
                             placeholder="start writing..."
-                            {...register("description", {required: true, minLength: 15})}/>
+                            {...register("description", {required: true, minLength: 10})}/>
                         {errors.description && <FormMessage>Description is too short</FormMessage>}
                     </InputField>
 
@@ -104,7 +104,7 @@ const Create = () => {
                             type="text"
                             name="short_description"
                             placeholder="start writing..."
-                            {...register("short_description", {required: true, minLength: 10})}/>
+                            {...register("short_description", {required: true, minLength: 8})}/>
                         {errors.short_description && <FormMessage>Description is too short</FormMessage>}
                     </InputField>
 
@@ -132,8 +132,8 @@ const Create = () => {
                                 type="number"
                                 name="beds"
                                 placeholder="Beds"
-                                {...register("beds", { required: true, min: 1, max: 100})} />
-                            {errors.beds && <FormMessage>min. 1 max. 100</FormMessage>}
+                                {...register("beds", { required: true, min: 1, max: 80})} />
+                            {errors.beds && <FormMessage>min. 1 max. 80</FormMessage>}
                         </InputField>
 
                         <InputField style={{flex:1}}>

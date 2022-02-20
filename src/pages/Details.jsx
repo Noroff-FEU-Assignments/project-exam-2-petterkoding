@@ -78,7 +78,7 @@ const Details = () => {
       <Facilities list={facilities} beds={details.beds} />
       
       <ReviewList reviews={reviews} />
-      <AddReview id={id}/>
+      
 
       <EnquiryForm/>
       
@@ -91,6 +91,9 @@ const Details = () => {
         allowFullScreen=""
         loading="lazy">
       </iframe>
+
+
+      <AddReview id={id}/>
     </Motion>
   );
 };

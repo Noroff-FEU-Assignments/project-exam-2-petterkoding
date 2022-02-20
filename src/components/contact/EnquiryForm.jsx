@@ -39,8 +39,9 @@ const ContactForm = () => {
 
   return (
     <>
-      <Heading size="3">Any questions about this establishment?</Heading>
-      <Paragraph>Don't hesitate to contact the host!</Paragraph>
+      <StyledHeading >Contact the host</StyledHeading>
+      <Heading size="4">Any questions about this establishment?</Heading>
+      <Paragraph>The host are willing to help you find the best solution</Paragraph>
       <Form onSubmit={handleSubmit(onSubmit)} id="contact-host">
       {error && <CreateMessage type="error">{error}</CreateMessage>}
       {sent && <CreateMessage type="success">Enquiry was sent!</CreateMessage>}
@@ -51,7 +52,7 @@ const ContactForm = () => {
               type="text"
               name="subject"
               placeholder="Subject"
-              {...register("subject", {required: true, minLength: 5})}
+              {...register("subject", {required: true, minLength: 5, maxLength: 10})}
             />
             {errors.subject && <FormMessage>Subject is required</FormMessage>}
           </InputContainer>
@@ -117,6 +118,12 @@ const Form = styled.form`
 
 const StyledField = styled.fieldset`
   border: none;
+`;
+
+const StyledHeading = styled.h3`
+  font-size: 1.5rem;
+  color: black;
+  margin-bottom: 0.8rem;
 `;
 
 const InputContainer = styled.div`

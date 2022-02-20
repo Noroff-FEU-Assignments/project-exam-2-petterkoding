@@ -3,8 +3,8 @@ import axios from 'axios';
 import { BASE_URL, ESTABLISHMENTS, POPULATE} from "../../constants/API";
 import Accommodation from './Accommodation';
 import FilterTypes from './FilterTypes';
-import FilterBeds from './FilterBeds';
-import FilterRating from './FilterRating';
+// import FilterBeds from './FilterBeds';
+import FilterOptions from './FilterOptions';
 import styled from "styled-components";
 
 const AccommodationList = () => {
@@ -12,7 +12,7 @@ const AccommodationList = () => {
     const [establishments, setEstablishments] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [activeType, setActiveType] = useState("all");
-    const [howManyBeds, setHowManyBeds] = useState(1);
+    const [num, setNum] = useState(1);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(null);
 
@@ -41,12 +41,12 @@ const AccommodationList = () => {
 
     return (
         <>
-            <FilterOptions>
+            <Filters>
                 {establishments && <FilterTypes arr={establishments} setState={setFiltered} activeFilter={activeType} setFilterOption={setActiveType} filterType="type" />}
-                {establishments && <FilterBeds arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="beds" />}
-                {establishments && <FilterRating arr={establishments} setState={setFiltered} activeFilter={howManyBeds} setFilterOption={setHowManyBeds} filterType="rating" />}
+                {establishments && <FilterOptions arr={establishments} setState={setFiltered} activeFilter={num} setFilterOption={setNum} filterType="beds" />}
+                {establishments && <FilterOptions arr={establishments} setState={setFiltered} activeFilter={num} setFilterOption={setNum} filterType="rating" />}
                 <Button onClick={()=> setFiltered(establishments)}><i className="fas fa-redo"></i></Button>
-            </FilterOptions>
+            </Filters>
             <Matches>Results: {filtered.length}</Matches>
                 <Flex>
                 {filtered.map(el=> {
@@ -67,7 +67,7 @@ const Flex = styled.div`
     flex-direction: column;
 `;
 
-const FilterOptions = styled.form`
+const Filters = styled.form`
     display: flex;
     width: 100%;
     justify-content: flex-start;

@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
-function FilterBeds({ arr, setState, activeFilter, setFilterOption, filterType }) {
+function FilterOptions({ arr, setState, activeFilter, setFilterOption, filterType }) {
     
     let filterBy = {};
 
-    if (filterType === "rating") {
-        filterBy = {
-            type: "rating",
-            options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        } 
-    }
+    
+    filterBy = {
+        type: filterType,
+        options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    } 
+    
     useEffect(() => {
-        if (activeFilter === "all") {
+        if (activeFilter === 1) {
             setState(arr);
             return;
         };
@@ -24,7 +24,7 @@ function FilterBeds({ arr, setState, activeFilter, setFilterOption, filterType }
     return (
 
         <FilterContainer>
-            <Label htmlFor="filter-select">{filterBy.type}</Label>
+            <Label htmlFor={filterBy.type}>{filterBy.type}</Label>
             <Select name={filterBy.type} onChange={(e) => setFilterOption(e.target.value)}>
                 {filterBy.options.map(opt => {
                     return <Option key={opt} value={opt}>{opt}</Option>
@@ -35,7 +35,7 @@ function FilterBeds({ arr, setState, activeFilter, setFilterOption, filterType }
     )
 };
 
-export default FilterBeds;
+export default FilterOptions;
 
 const FilterContainer = styled.div`
     margin: 1rem 1rem 0 0;

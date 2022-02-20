@@ -3,9 +3,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { BASE_URL } from "../../constants/API";
 import CreateMessage from "../common/CreateMessage";
-import Heading from "../common/Heading";
 import FormMessage from "../common/FormMessage";
 import styled from "styled-components";
+import Paragraph from "../common/Paragraph";
 
 const AddReview = ({id}) => {
 
@@ -35,8 +35,9 @@ const AddReview = ({id}) => {
       }
     }
   return (
-    <>
-      <Heading size="3">Add review</Heading>
+    <Wrapper>
+      <StyledHeading size="3">Add a Review</StyledHeading>
+      <Paragraph>We appreciate your feedback.</Paragraph>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {error && <CreateMessage type="error">{error}</CreateMessage>}
         {sent && <CreateMessage type="success">You've posted a Review!</CreateMessage>}
@@ -106,11 +107,20 @@ const AddReview = ({id}) => {
           
         </StyledField>
       </Form>
-    </>
+    </Wrapper>
   )
 }
 
 export default AddReview
+
+const Wrapper = styled.div`
+  margin: 4rem 0;
+`;
+
+const StyledHeading = styled.h3`
+  color: black;
+  font-size: 1.5rem;
+`;
 
 const Form = styled.form`
   padding: 2rem 3rem;
