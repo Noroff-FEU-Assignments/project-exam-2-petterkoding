@@ -27,10 +27,10 @@ const ContactForm = () => {
       const response = await axios.post( `${BASE_URL}/api/enquiries`, {
         data: data,
       });
-      if (response.ok) {
+      if (response.status === 200) {
         setSent(true);
       }
-      console.log(response);
+      console.log("response",response);
     } catch (error) {
       setError(error.toString());
     } finally {

@@ -26,7 +26,7 @@ const ContactForm = () => {
         data: data,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         setSent(true);
       }
       console.log(response);

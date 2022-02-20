@@ -15,7 +15,7 @@ const AddReview = ({id}) => {
   
     const { handleSubmit, register, reset, formState } = useForm({ mode: "onChange" });
   
-    const { errors, isValid } = formState;
+    const { errors, isValid, isDirty } = formState;
   
     async function onSubmit(data) {
       setSubmitting(true);
@@ -25,12 +25,15 @@ const AddReview = ({id}) => {
         const response = await axios.post( `${BASE_URL}/api/reviews`, {
           data: data,
         });
+
+        if (response.status === 200) {
+          setSent(true);
+        }
         console.log(response);
       } catch (error) {
         setError(error.toString());
       } finally {
         setSubmitting(false)
-        setSent(true);
         reset();
       }
     }
@@ -40,7 +43,7 @@ const AddReview = ({id}) => {
       <Paragraph>We appreciate your feedback.</Paragraph>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {error && <CreateMessage type="error">{error}</CreateMessage>}
-        {sent && <CreateMessage type="success">You've posted a Review!</CreateMessage>}
+        {sent && !isDirty && <CreateMessage type="success">You've posted a Review!</CreateMessage>}
         <StyledField disabled={submitting}>
           
           <InputContainer>
