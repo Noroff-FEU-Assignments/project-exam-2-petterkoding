@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { BASE_URL, ESTABLISHMENTS, query} from "../constants/API";
 import HostDetails from "../components/host/HostDetails";
 import ReviewList from "../components/accommodations/details/ReviewList";
@@ -10,6 +11,7 @@ import EnquiryForm from "../components/contact/EnquiryForm";
 import Motion from "../components/motion/Motion";
 import Loading from "../components/loading/Loading";
 import CreateMessage from "../components/common/CreateMessage";
+import MissingHost from "../components/admin/MissingHost";
 import styled from "styled-components";
 
 const Details = () => {
@@ -18,6 +20,7 @@ const Details = () => {
   const [facilities, setFacilities] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [host, setHost] = useState({});
+  const [auth, setAuth] = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [show, setShow] = useState(false);
@@ -27,6 +30,8 @@ const Details = () => {
   const { id } = useParams();
 
   const url = `${BASE_URL}${ESTABLISHMENTS}/${id}?${query}`;
+
+  
 
   useEffect(() => {
     async function getDetails() {
@@ -38,7 +43,10 @@ const Details = () => {
         setFacilities(json.facilities.data);
         setReviews(json.reviews.data);
         setHost(json.host?.data?.attributes);
+
         document.title = `Holidaze | ${json.title}`
+        console.log(json)
+        
       } catch (error) {
         console.log(error)
         setErrors(error)
@@ -49,21 +57,23 @@ const Details = () => {
     getDetails();
   }, [url])
 
-
   if (errors) return <CreateMessage>{errors}</CreateMessage>;
   
   
   if (loading) return <Loading />;
 
- 
+
   return (
     <Motion>
       <FlexContainer>
         <MainImage src={details.img.data.attributes.url} alt={details.img.data.attributes.alternativeText}/>
-        {host && <HostDetails details={host} show={show} setShow={setShow}/>}
+        {host ? <HostDetails details={host} show={show} setShow={setShow} /> : <MissingHost id={id}/>}
       </FlexContainer>
 
-      <ToggleHostInfo onClick={()=>setShow(!show)}>View Host</ToggleHostInfo>
+      {!host && auth ? <AddHostLink to={`admin/add-host/${id}`}>Add host</AddHostLink> : <ToggleHostInfo>No Host added</ToggleHostInfo>}
+      {host && <ToggleHostInfo onClick={() => setShow(!show)}>View Host</ToggleHostInfo>}
+      
+      
 
       <Heading>
         {details.title}      
@@ -180,7 +190,33 @@ const Address = styled.address`
 const ToggleHostInfo = styled.button`
   padding: 0.7rem 1rem;
   display: none;
-  border: none;
+  border-radius: 20px;
+  border: 1px solid black;
+  background: none;
+  margin-left: auto;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+  width: 20%;
+
+  &:hover{
+    cursor: pointer;
+    background: ${props=>props.theme.seaBlack};
+    color: white;
+  }
+
+  @media (max-width: 980px) {
+    display: block;
+
+  }
+  @media (max-width: 600px) {
+   width: 100%;
+   margin-bottom: 1rem;
+  }
+`;
+
+const AddHostLink = styled(Link)`
+  padding: 0.7rem 1rem;
+  display: none;
   border-radius: 20px;
   border: 1px solid black;
   background: none;
@@ -188,6 +224,10 @@ const ToggleHostInfo = styled.button`
   margin-top: -20px;
   margin-bottom: 0.5rem;
   transition: all 0.2s ease;
+  width: 20%;
+  text-align: center;
+  text-decoration: none;
+  color: black;
 
   &:hover{
     cursor: pointer;

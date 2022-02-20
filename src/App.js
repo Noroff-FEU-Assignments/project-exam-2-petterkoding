@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyles";
 import theme from "./styles/theme";
+import AddHost from "./pages/AddHost";
 
 function App() {
   return (
@@ -44,6 +45,11 @@ function App() {
                   path="admin/create-establishment"
                   exact="true"
                   element={<CreateEstablishment />}
+                />
+                <Route
+                  path="admin/add-host/:id"
+                  exact="true"
+                  element={<AddHost />}
                 />
               </Routes>
             </Container>

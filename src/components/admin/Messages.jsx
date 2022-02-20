@@ -52,4 +52,5 @@ export default Messages;
 
 const Container = styled(motion.div)`
     width: 100%;
+    height: auto;
 `;

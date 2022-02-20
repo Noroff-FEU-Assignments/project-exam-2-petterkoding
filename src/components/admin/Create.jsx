@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants/API';
 import { useForm } from 'react-hook-form';
@@ -25,8 +25,6 @@ const Create = () => {
 
     const formData = new FormData();
 
-   
-    
     async function onSubmit({ title, address, description, short_description, type, rating, beds, facilities, img }) {
         setSubmitting(true);
         setPublishError(null);

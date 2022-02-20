@@ -56,4 +56,5 @@ export default Enquiries;
 
 const Container = styled(motion.div)`
     width: 100%;
+    height: auto;
 `;

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/API";
 import CreateMessage from "../common/CreateMessage";
+import FormMessage from "../common/FormMessage";
 import styled from "styled-components";
 
 const LoginForm = () => {
@@ -49,7 +50,7 @@ const LoginForm = () => {
             placeholder="Username"
             {...register("identifier", {required: true, minLength: 3})}
           />
-          {errors.username && <p>Username must be atleast 3 characters</p>}
+          {errors.username && <FormMessage>Username must be atleast 3 characters</FormMessage>}
         </InputContainer>
 
         <InputContainer>
@@ -60,7 +61,7 @@ const LoginForm = () => {
             placeholder="********"
             {...register("password", {required: true, minLength: 5})}
           />
-          {errors.password && <p>Password must be atleast 5 characters</p>}
+          {errors.password && <FormMessage>Password must be atleast 5 characters</FormMessage>}
         </InputContainer>
 
         <Button type="submit" disabled={!isValid}>
