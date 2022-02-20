@@ -97,6 +97,9 @@ const AnimText1 = styled(motion.span)`
   @media (max-width: 980px){
     font-size: calc(3rem + 2vw);
   }
+  @media (max-width: 480px){
+    font-size: 2.4rem;
+  }
 `;
 
 const AnimateContain = styled(motion.div)`
