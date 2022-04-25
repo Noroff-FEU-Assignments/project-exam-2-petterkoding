@@ -30,7 +30,7 @@ const LoginForm = () => {
       setAuth(response.data);
       history("/admin")
     } catch (error) {
-      setLoginError(error.toString());
+      setLoginError( error.toString());
     } finally {
       setSubmitting(false);
     }
